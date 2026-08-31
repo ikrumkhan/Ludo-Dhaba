@@ -259,7 +259,7 @@
         window.onload = function () {
             window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
                 'size': 'invisible'
-            }, firebase.auth());
+            });
         };
 
         let confirmationResultObj;
@@ -345,4 +345,5 @@
     </script>
 </body>
 </html>
+
 
