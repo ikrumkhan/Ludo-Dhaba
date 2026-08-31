@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LudoDhaba</title>
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     
     <style>
         * {
@@ -241,8 +238,11 @@
         </div>
     </div>
 
-    <script>
-        // --- FIREBASE CONFIGURATION ---
+    <!-- Firebase SDK Modular Version -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
             authDomain: "ludo-badsah.firebaseapp.com",
@@ -252,24 +252,21 @@
             appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
         let confirmationResultObj;
 
-        function sendOTP() {
+        window.sendOTP = function() {
             let phoneNumber = document.getElementById('mobile-input').value;
 
-            // Setup Recaptcha on click to avoid initialization timing errors
             if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                     'size': 'invisible'
                 });
             }
 
-            let appVerifier = window.recaptchaVerifier;
-
-            firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
                 .then(function (confirmationResult) {
                     confirmationResultObj = confirmationResult;
                     document.getElementById('otp-container').style.display = 'block';
@@ -280,7 +277,7 @@
                 });
         }
 
-        function verifyOTP() {
+        window.verifyOTP = function() {
             let code = document.getElementById('otp-input').value;
             confirmationResultObj.confirm(code).then(function (result) {
                 document.getElementById('login-view').style.display = 'none';
@@ -290,7 +287,9 @@
                 alert('Galat OTP! Kripya dobara koshish karein.');
             });
         }
+    </script>
 
+    <script>
         let walletBalance = 500;
 
         function openWallet() {
@@ -346,4 +345,3 @@
     </script>
 </body>
 </html>
-
