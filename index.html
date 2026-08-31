@@ -255,17 +255,18 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // Setup Recaptcha and Phone Auth
-        window.onload = function () {
-            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                'size': 'invisible'
-            });
-        };
-
         let confirmationResultObj;
 
         function sendOTP() {
             let phoneNumber = document.getElementById('mobile-input').value;
+
+            // Setup Recaptcha on click to avoid initialization timing errors
+            if (!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                    'size': 'invisible'
+                });
+            }
+
             let appVerifier = window.recaptchaVerifier;
 
             firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -345,5 +346,4 @@
     </script>
 </body>
 </html>
-
 
