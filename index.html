@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LudoDhaba</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    
     <style>
         * {
             box-sizing: border-box;
@@ -181,19 +185,22 @@
         <!-- LOGIN VIEW -->
         <div id="login-view" class="login-screen">
             <div class="login-logo">🎲 LudoDhaba</div>
-            <label style="color: #94a3b8; margin-bottom: 5px; font-size: 14px;">Mobile Number Darj Karein</label>
-            <input type="tel" id="mobile-input" class="input-box" placeholder="10 digit number" maxlength="10">
-            <button class="btn-main" onclick="showOtpBox()">Get OTP</button>
+            <label style="color: #94a3b8; margin-bottom: 5px; font-size: 14px;">Mobile Number (+91 ke sath likhein)</label>
+            <input type="tel" id="mobile-input" class="input-box" value="+91">
+            <button class="btn-main" onclick="sendOTP()">Send OTP</button>
             
+            <!-- Hidden Recaptcha Container -->
+            <div id="recaptcha-container"></div>
+
             <div id="otp-container" style="display: none; margin-top: 20px;">
-                <label style="color: #94a3b8; margin-bottom: 5px; font-size: 14px;">OTP Dalein (1234)</label>
-                <input type="text" id="otp-input" class="input-box" placeholder="4-digit OTP" maxlength="4">
-                <button class="btn-main" onclick="loginSuccess()">Verify & Login</button>
+                <label style="color: #94a3b8; margin-bottom: 5px; font-size: 14px;">OTP Dalein</label>
+                <input type="text" id="otp-input" class="input-box" placeholder="6-digit OTP" maxlength="6">
+                <button class="btn-main" onclick="verifyOTP()">Verify & Login</button>
             </div>
         </div>
 
         <!-- DASHBOARD VIEW -->
-        <div id="dashboard-view" style="display: none; display: flex; flex-direction: column; height: 100%;">
+        <div id="dashboard-view" style="display: none; flex-direction: column; height: 100%;">
             <div class="header">
                 <div class="logo">🎲 LudoDhaba</div>
                 <div class="wallet-box" onclick="openWallet()">💰 <span id="balance-text">₹500</span></div>
@@ -235,26 +242,55 @@
     </div>
 
     <script>
-        let walletBalance = 500;
+        // --- FIREBASE CONFIGURATION ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
+            authDomain: "ludo-badsah.firebaseapp.com",
+            projectId: "ludo-badsah",
+            storageBucket: "ludo-badsah.appspot.com",
+            messagingSenderId: "1008082585739",
+            appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
+        };
 
-        function showOtpBox() {
-            let mob = document.getElementById('mobile-input').value;
-            if(mob.length === 10) {
-                document.getElementById('otp-container').style.display = 'block';
-            } else {
-                alert('Kripya sahi 10-digit mobile number dalein.');
-            }
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Setup Recaptcha and Phone Auth
+        window.onload = function () {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'invisible'
+            }, firebase.auth());
+        };
+
+        let confirmationResultObj;
+
+        function sendOTP() {
+            let phoneNumber = document.getElementById('mobile-input').value;
+            let appVerifier = window.recaptchaVerifier;
+
+            firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                .then(function (confirmationResult) {
+                    confirmationResultObj = confirmationResult;
+                    document.getElementById('otp-container').style.display = 'block';
+                    alert('OTP SMS successfully bhej diya gaya hai!');
+                }).catch(function (error) {
+                    console.error(error);
+                    alert('OTP send karne mein error aayi: ' + error.message);
+                });
         }
 
-        function loginSuccess() {
-            let otp = document.getElementById('otp-input').value;
-            if(otp === '1234') {
+        function verifyOTP() {
+            let code = document.getElementById('otp-input').value;
+            confirmationResultObj.confirm(code).then(function (result) {
                 document.getElementById('login-view').style.display = 'none';
                 document.getElementById('dashboard-view').style.display = 'flex';
-            } else {
-                alert('Galat OTP! Kripya "1234" dalein.');
-            }
+                alert('Login Successful!');
+            }).catch(function (error) {
+                alert('Galat OTP! Kripya dobara koshish karein.');
+            });
         }
+
+        let walletBalance = 500;
 
         function openWallet() {
             let amt = prompt("Kitna amount add karna hai?", "100");
@@ -309,3 +345,4 @@
     </script>
 </body>
 </html>
+
