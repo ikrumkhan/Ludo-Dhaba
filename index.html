@@ -1,266 +1,162 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LudoDhaba - Real Cash Ludo</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0f172a; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .app-container { width: 100%; max-width: 410px; background: #1e293b; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
-        .header { background: #0f172a; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
-        .logo { font-size: 18px; font-weight: bold; color: #f59e0b; }
-        .wallet-box { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 14px; color: #22c55e; font-weight: bold; cursor: pointer; }
-        .content { padding: 16px; flex: 1; overflow-y: auto; }
-        .banner { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 15px; border-radius: 10px; color: #0f172a; font-weight: bold; text-align: center; margin-bottom: 15px; }
-        .section-title { font-size: 15px; color: #94a3b8; margin-bottom: 10px; font-weight: bold; }
-        .battle-card { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
-        .battle-top { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
-        .battle-middle { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .prize { font-size: 16px; font-weight: bold; color: #22c55e; }
-        .entry { font-size: 14px; color: #f59e0b; }
-        .btn-play { background: #22c55e; color: white; border: none; padding: 6px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .btn-create { background: #ef4444; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; margin-bottom: 15px; cursor: pointer; }
-        .match-actions { display: flex; gap: 8px; margin-top: 8px; }
-        .btn-win { background: #22c55e; color: white; flex: 1; padding: 6px; border: none; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .btn-loss { background: #ef4444; color: white; flex: 1; padding: 6px; border: none; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .bottom-nav { display: flex; background: #0f172a; border-top: 1px solid #334155; padding: 10px 0; justify-content: space-around; }
-        .nav-link { text-align: center; font-size: 11px; color: #94a3b8; cursor: pointer; }
-        .login-screen { padding: 40px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; }
-        .login-logo { font-size: 32px; font-weight: bold; color: #f59e0b; margin-bottom: 10px; }
-        .login-desc { color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
-        .btn-google { width: 100%; padding: 14px; background: #ffffff; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    </style>
+    <title>LudoDhaba</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="app-container">
-        <!-- LOGIN VIEW -->
-        <div id="login-view" class="login-screen">
-            <div class="login-logo">🎲 LudoDhaba</div>
-            <div class="login-desc">Google Account se safe login karein!</div>
-            <button class="btn-google" onclick="loginWithGoogle()">Sign in with Google</button>
-        </div>
+<body class="bg-[#0b061e] text-white font-sans antialiased pb-24">
 
-        <!-- DASHBOARD VIEW -->
-        <div id="dashboard-view" style="display: none; flex-direction: column; height: 100%;">
-            <div class="header">
-                <div class="logo">🎲 LudoDhaba</div>
-                <div class="wallet-box" onclick="openWallet()">💰 <span id="balance-text">₹500</span></div>
+    <!-- App Container to Prevent Left Alignment Issues -->
+    <div class="max-w-md mx-auto min-h-screen relative shadow-2xl bg-[#0b061e]">
+
+        <!-- Top Header / Balance Section -->
+        <div class="flex justify-between items-center p-4 bg-[#140b32] border-b border-purple-900/45 sticky top-0 z-50">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center font-bold text-sm">🎲</div>
+                <span class="font-bold tracking-wide text-lg text-yellow-400">LudoDhaba</span>
             </div>
-            <div class="content">
-                <div class="banner">🚀 Room Code Share Karein & Jeetein!</div>
-                <button class="btn-create" onclick="createChallenge()">+ Create Challenge</button>
-                <div class="section-title">Active Battles</div>
-                <div id="challenges-list"></div>
-            </div>
-            <div class="bottom-nav">
-                <div class="nav-link" onclick="openWallet()">💳 Wallet</div>
-                <div class="nav-link" onclick="showProfile()">👤 Profile</div>
+            <div class="bg-[#1f124a] px-3 py-1 rounded-lg border border-purple-500/30 text-xs">
+                <p class="text-gray-400 text-[10px]">Wallet</p>
+                <p class="font-bold text-green-400">₹500</p>
             </div>
         </div>
-    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
-            authDomain: "ludo-badsah.firebaseapp.com",
-            databaseURL: "https://ludo-badsah-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "ludo-badsah",
-            storageBucket: "ludo-badsah.appspot.com",
-            messagingSenderId: "1008082585739",
-            appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-        const provider = new GoogleAuthProvider();
-        let currentUser = null;
-
-        window.loginWithGoogle = function() {
-            signInWithPopup(auth, provider).then((result) => {
-                currentUser = result.user;
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('dashboard-view').style.display = 'flex';
-                loadChallenges();
-            }).catch((error) => { alert('Error: ' + error.message); });
-        };
-
-        window.addNewChallengeToDB = function(fee, roomCode) {
-            const newRef = push(ref(db, 'challenges'));
-            set(newRef, { id: newRef.key, creator: currentUser ? currentUser.displayName : 'Player', entry: fee, prize: fee * 1.9, roomCode: roomCode });
-        };
-
-        window.loadChallenges = function() {
-            onValue(ref(db, 'challenges'), (snapshot) => {
-                const data = snapshot.val();
-                let list = document.getElementById('challenges-list');
-                list.innerHTML = '';
-                if(data) {
-                    Object.values(data).forEach(c => {
-                        list.innerHTML += `<div class="battle-card"><div class="battle-top"><span>Creator: ${c.creator}</span><span>Room: <b>${c.roomCode}</b></span></div><div class="battle-middle"><div class="entry">Entry: ₹${c.entry}</div><button class="btn-play" onclick="alert('Room Code: ${c.roomCode}')">Join</button></div><div class="match-actions"><button class="btn-win" onclick="remove(ref(db, 'challenges/${c.id}'))">🏆 Main Jeeta</button><button class="btn-loss" onclick="remove(ref(db, 'challenges/${c.id}'))">❌ Main Hara</button></div></div>`;
-                    });
-                }
-            });
-        };
-
-        window.showProfile = function() {
-            if(currentUser) alert('Naam: ' + currentUser.displayName + '\nEmail: ' + currentUser.email);
-        };
-    </script>
-
-    <script>
-        let walletBalance = 500;
-        function openWallet() {
-            let amt = prompt("Amount dalein:", "100");
-            if(amt && !isNaN(amt)) { walletBalance += Number(amt); document.getElementById('balance-text').innerText = '₹' + walletBalance; }
-        }
-        function createChallenge() {
-            let amt = prompt("Entry Fee:", "100");
-            if(amt && !isNaN(amt) && walletBalance >= Number(amt)) {
-                walletBalance -= Number(amt);
-                document.getElementById('balance-text').innerText = '₹' + walletBalance;
-                let roomCode = 'LUDO' + Math.floor(1000 + Math.random() * 9000);
-                window.addNewChallengeToDB(Number(amt), roomCode);
-                alert('Room Code ban gaya: ' + roomCode);
-            } else { alert('Balance kam hai ya galat amount hai!'); }
-        }
-    </script>
-<!-- Wallet & Deposit/Withdrawal Section Modal/View -->
-<div id="walletSection" class="p-4 space-y-4 pb-24">
-    <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 shadow-lg">
-        <h3 class="font-bold text-base text-yellow-400 mb-2"><i class="fa-solid fa-wallet"></i> My Wallet</h3>
-        <div class="flex justify-between items-center bg-[#1f124a] p-3 rounded-lg border border-purple-500/30 mb-4">
-            <div>
-                <p class="text-xs text-gray-400">Available Balance</p>
-                <p id="walletBalance" class="text-xl font-bold text-green-400">₹500</p>
+        <!-- Google Login Box -->
+        <div class="p-4">
+            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 text-center space-y-3 shadow-md">
+                <h3 class="font-bold text-sm text-white">Account Access</h3>
+                <p class="text-xs text-gray-400">Google Account se safe login karein!</p>
+                <button id="googleLoginBtn" class="w-full bg-white hover:bg-gray-100 text-gray-900 font-bold py-2.5 px-4 rounded-lg text-xs flex items-center justify-center space-x-2 shadow transition">
+                    <i class="fa-brands fa-google text-red-500 text-base"></i>
+                    <span>Sign in with Google</span>
+                </button>
             </div>
-            <button onclick="toggleTab('deposit')" class="bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow">Add Money</button>
-            <button onclick="toggleTab('withdraw')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow">Withdraw</button>
         </div>
 
-        <!-- Deposit Box -->
-        <div id="depositTab" class="space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20">
-            <h4 class="font-bold text-xs text-white">Add Money via QR / UPI</h4>
-            <div class="text-center py-2">
-                <p class="text-[11px] text-gray-300 mb-2">Scan QR or pay to UPI: <span class="text-yellow-400 font-bold">yourname@upi</span></p>
-                <!-- Aap yahan apna QR code image link laga sakte hain -->
-                <div class="w-32 h-32 mx-auto bg-white p-1 rounded flex items-center justify-center text-black text-xs font-bold">
-                    [ Your QR Code ]
+        <!-- Main Banner Buttons -->
+        <div class="px-4 space-y-3">
+            <button class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2">
+                <span>🚀 Room Code Share Karein & Jeetein!</span>
+            </button>
+            <button class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg">
+                + Create Challenge
+            </button>
+        </div>
+
+        <!-- Active Battles Section -->
+        <div class="p-4 space-y-3">
+            <h3 class="font-bold text-sm text-gray-200">Active Battles</h3>
+            <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow-md">
+                <div>
+                    <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Sameem Khan</span></p>
+                    <p class="text-xs text-gray-300 mt-0.5">Room: <span class="text-yellow-400 font-bold">LUDO7245</span></p>
+                    <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹100</p>
+                </div>
+                <button class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow">Join</button>
+            </div>
+        </div>
+
+        <!-- Wallet & Deposit / Withdrawal Section -->
+        <div class="p-4 space-y-4">
+            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 shadow-lg">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-bold text-sm text-yellow-400"><i class="fa-solid fa-wallet"></i> My Wallet</h3>
+                    <div class="space-x-1">
+                        <button onclick="toggleTab('deposit')" class="bg-green-600 text-white px-2.5 py-1 rounded text-[11px] font-bold">Add Money</button>
+                        <button onclick="toggleTab('withdraw')" class="bg-red-600 text-white px-2.5 py-1 rounded text-[11px] font-bold">Withdraw</button>
+                    </div>
+                </div>
+
+                <!-- Deposit Box -->
+                <div id="depositTab" class="space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20">
+                    <h4 class="font-bold text-xs text-white">Add Money via QR / UPI</h4>
+                    <p class="text-[11px] text-gray-300">Scan QR or pay to UPI: <span class="text-yellow-400 font-bold">yourname@upi</span></p>
+                    <div class="w-28 h-28 mx-auto bg-white p-1 rounded flex items-center justify-center text-black text-xs font-bold shadow">
+                        [ QR Code ]
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-gray-400">Enter Amount</label>
+                        <input type="number" id="depositAmount" placeholder="e.g. 500" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-gray-400">12-Digit UTR / Transaction ID</label>
+                        <input type="text" id="utrNumber" placeholder="e.g. 3352xxxxxxxx" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
+                    </div>
+                    <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow">Submit Deposit Request</button>
+                </div>
+
+                <!-- Withdrawal Box -->
+                <div id="withdrawTab" class="hidden space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20 mt-3">
+                    <h4 class="font-bold text-xs text-white">Withdraw Money to UPI / Bank</h4>
+                    <div>
+                        <label class="text-[10px] text-gray-400">Withdrawal Amount (Min ₹100)</label>
+                        <input type="number" id="withdrawAmount" placeholder="Enter Amount" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-gray-400">Enter UPI ID (PhonePe/GooglePay)</label>
+                        <input type="text" id="userUpi" placeholder="username@oksbi" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
+                    </div>
+                    <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow">Request Withdrawal</button>
                 </div>
             </div>
-            <div>
-                <label class="text-[11px] text-gray-400">Enter Amount</label>
-                <input type="number" id="depositAmount" placeholder="e.g. 500" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-1.5 text-xs text-white mt-1">
-            </div>
-            <div>
-                <label class="text-[11px] text-gray-400">Enter 12-Digit UTR / Transaction ID</label>
-                <input type="text" id="utrNumber" placeholder="e.g. 3352xxxxxxxx" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-1.5 text-xs text-white mt-1">
-            </div>
-            <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs">Submit Deposit Request</button>
         </div>
 
-        <!-- Withdrawal Box -->
-        <div id="withdrawTab" class="hidden space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/25 mt-3">
-            <h4 class="font-bold text-xs text-white">Withdraw Money to UPI / Bank</h4>
-            <div>
-                <label class="text-[11px] text-gray-400">Withdrawal Amount (Min ₹100)</label>
-                <input type="number" id="withdrawAmount" placeholder="Enter Amount" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-1.5 text-xs text-white mt-1">
-            </div>
-            <div>
-                <label class="text-[11px] text-gray-400">Enter UPI ID (PhonePe/GooglePay/Paytm)</label>
-                <input type="text" id="userUpi" placeholder="username@oksbi" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-1.5 text-xs text-white mt-1">
-            </div>
-            <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs">Request Withdrawal</button>
+        <!-- Bottom Navigation Bar -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 px-2 z-50 text-xs">
+            <a href="#" class="flex flex-col items-center text-purple-400">
+                <i class="fa-solid fa-gamepad text-base"></i>
+                <span class="text-[10px]">Play</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-400 hover:text-white">
+                <i class="fa-solid fa-wallet text-base"></i>
+                <span class="text-[10px]">Wallet</span>
+            </a>
+            <a href="#" class="flex flex-col items-center text-gray-400 hover:text-white">
+                <i class="fa-solid fa-user text-base"></i>
+                <span class="text-[10px]">Profile</span>
+            </a>
         </div>
+
     </div>
-</div>
 
-<!-- Script to handle UI switching and Firebase Database logic -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    // Aapki Firebase configuration (Jo pehle use ki thi vahi yahan rahegi)
-    const firebaseConfig = {
-        apiKey: "YOUR_FIREBASE_API_KEY",
-        authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-        projectId: "YOUR_FIREBASE_PROJECT_ID",
-        storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-        appId: "YOUR_FIREBASE_APP_ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Tab Switching Function
-    window.toggleTab = function(tab) {
-        const depositTab = document.getElementById('depositTab');
-        const withdrawTab = document.getElementById('withdrawTab');
-        if(tab === 'deposit') {
-            depositTab.classList.remove('hidden');
-            withdrawTab.classList.add('hidden');
-        } else {
-            depositTab.classList.add('hidden');
-            withdrawTab.classList.remove('hidden');
-        }
-    }
-
-    // Submit Deposit Request to Firebase
-    window.submitDeposit = async function() {
-        const amount = document.getElementById('depositAmount').value;
-        const utr = document.getElementById('utrNumber').value;
-
-        if(!amount || !utr) {
-            alert('Please fill all fields!');
-            return;
+    <!-- Script Logic -->
+    <script>
+        function toggleTab(tab) {
+            const depositTab = document.getElementById('depositTab');
+            const withdrawTab = document.getElementById('withdrawTab');
+            if(tab === 'deposit') {
+                depositTab.classList.remove('hidden');
+                withdrawTab.classList.add('hidden');
+            } else {
+                depositTab.classList.add('hidden');
+                withdrawTab.classList.remove('hidden');
+            }
         }
 
-        try {
-            await addDoc(collection(db, "deposits"), {
-                amount: Number(amount),
-                utr: utr,
-                status: "Pending",
-                timestamp: new Date()
-            });
-            alert('Deposit request submitted successfully! Your balance will update after verification.');
-            document.getElementById('depositAmount').value = '';
-            document.getElementById('utrNumber').value = '';
-        } catch (e) {
-            alert('Error submitting request: ' + e.message);
-        }
-    }
-
-    // Submit Withdrawal Request to Firebase
-    window.submitWithdrawal = async function() {
-        const amount = document.getElementById('withdrawAmount').value;
-        const upi = document.getElementById('userUpi').value;
-
-        if(!amount || !upi) {
-            alert('Please fill all fields!');
-            return;
+        function submitDeposit() {
+            const amount = document.getElementById('depositAmount').value;
+            const utr = document.getElementById('utrNumber').value;
+            if(!amount || !utr) {
+                alert('Please fill all fields!');
+                return;
+            }
+            alert('Deposit request submitted successfully!');
         }
 
-        try {
-            await addDoc(collection(db, "withdrawals"), {
-                amount: Number(amount),
-                upiId: upi,
-                status: "Pending",
-                timestamp: new Date()
-            });
-            alert('Withdrawal request submitted successfully! Admin will send money to your UPI soon.');
-            document.getElementById('withdrawAmount').value = '';
-            document.getElementById('userUpi').value = '';
-        } catch (e) {
-            alert('Error submitting withdrawal: ' + e.message);
+        function submitWithdrawal() {
+            const amount = document.getElementById('withdrawAmount').value;
+            const upi = document.getElementById('userUpi').value;
+            if(!amount || !upi) {
+                alert('Please fill all fields!');
+                return;
+            }
+            alert('Withdrawal request submitted successfully!');
         }
-    }
-            </script>
+    </script>
 </body>
 </html>
+
 
