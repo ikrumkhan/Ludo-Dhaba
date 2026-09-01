@@ -1,889 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1c">
-<title>Ludo Badsah</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#070b16;
-  color:#fff;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-}
-
-.app{
-  max-width:600px;
-  min-height:100vh;
-  margin:auto;
-  background:#0a1020;
-  padding-bottom:90px;
-}
-
-/* HEADER */
-.header{
-  height:70px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#0b1121;
-  border-bottom:1px solid #202b43;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-.logo{
-  font-size:20px;
-  font-weight:900;
-  letter-spacing:.5px;
-}
-
-.logo span{
-  color:#ffc62e;
-}
-
-.crown{
-  color:#ffc62e;
-  font-size:28px;
-  margin-right:6px;
-}
-
-.bell{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  background:#151e33;
-  color:white;
-  font-size:19px;
-}
-
-/* HERO */
-.hero{
-  margin:18px;
-  padding:24px;
-  min-height:220px;
-  border-radius:24px;
-  background:
-  radial-gradient(circle at 90% 10%,#7b42ff55,transparent 35%),
-  linear-gradient(135deg,#18213b,#10172a);
-  border:1px solid #293650;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  overflow:hidden;
-}
-
-.small-title{
-  color:#8f9bb7;
-  font-size:11px;
-  letter-spacing:2px;
-  margin-bottom:8px;
-}
-
-.hero h1{
-  font-size:31px;
-  line-height:1.12;
-}
-
-.hero h1 span{
-  color:#ffc62e;
-}
-
-.hero p{
-  color:#9ba7c0;
-  font-size:13px;
-  line-height:1.5;
-  margin:12px 0 18px;
-}
-
-.dice{
-  font-size:72px;
-  transform:rotate(-8deg);
-}
-
-/* BUTTON */
-.play-btn{
-  background:linear-gradient(135deg,#ffd347,#ff9e18);
-  color:#111;
-  padding:13px 21px;
-  border-radius:12px;
-  font-weight:900;
-}
-
-/* WALLET */
-.wallet{
-  margin:0 18px 22px;
-  padding:18px;
-  border-radius:18px;
-  border:1px solid #2b3650;
-  background:#10182b;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.wallet small{
-  color:#8c98b2;
-  font-size:10px;
-}
-
-.balance{
-  display:block;
-  margin-top:4px;
-  font-size:25px;
-  font-weight:900;
-  color:#fff;
-}
-
-.wallet-btn{
-  padding:10px 16px;
-  border:1px solid #52617e;
-  border-radius:10px;
-  background:transparent;
-  color:#fff;
-}
-
-/* SECTION */
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin:24px 18px 12px;
-}
-
-.section-title h2{
-  font-size:18px;
-}
-
-.view{
-  color:#ffc62e;
-  background:transparent;
-  font-size:12px;
-}
-
-/* MENU */
-.menu{
-  padding:0 18px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
-}
-
-.menu-card{
-  min-height:105px;
-  padding:12px 5px;
-  border-radius:15px;
-  border:1px solid #253049;
-  background:#10182b;
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-}
-
-.menu-icon{
-  font-size:25px;
-}
-
-.menu-card b{
-  font-size:11px;
-}
-
-.menu-card small{
-  color:#7f8ca6;
-  font-size:9px;
-}
-
-/* TOURNAMENT */
-.tournaments{
-  padding:0 18px;
-}
-
-.tournament{
-  margin-bottom:11px;
-  padding:16px;
-  border-radius:17px;
-  background:#10182b;
-  border:1px solid #253049;
-}
-
-.tournament-top{
-  display:flex;
-  justify-content:space-between;
-}
-
-.live{
-  display:inline-block;
-  padding:4px 7px;
-  border-radius:5px;
-  color:#4ee39b;
-  background:#1ab66b22;
-  font-size:9px;
-  font-weight:bold;
-}
-
-.upcoming{
-  color:#ffc62e;
-  background:#ffc62e20;
-}
-
-.tournament h3{
-  font-size:16px;
-  margin:8px 0 4px;
-}
-
-.tournament p{
-  color:#8995ad;
-  font-size:11px;
-}
-
-.prize{
-  text-align:right;
-  color:#ffc62e;
-  font-size:19px;
-  font-weight:900;
-}
-
-.prize small{
-  display:block;
-  color:#7e8aa4;
-  font-size:9px;
-  font-weight:normal;
-  margin-top:3px;
-}
-
-.join{
-  width:100%;
-  margin-top:13px;
-  padding:10px;
-  border-radius:10px;
-  background:linear-gradient(135deg,#ffd347,#ff9e18);
-  color:#111;
-  font-weight:900;
-}
-
-/* LEADERBOARD */
-.leaderboard{
-  margin:0 18px;
-  border-radius:15px;
-  overflow:hidden;
-  border:1px solid #253049;
-}
-
-.player{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:14px;
-  background:#10182b;
-  border-bottom:1px solid #202b42;
-}
-
-.player:last-child{
-  border-bottom:0;
-}
-
-.player strong{
-  margin-left:auto;
-  color:#ffc62e;
-}
-
-.rank{
-  font-size:21px;
-}
-
-/* BOTTOM NAV */
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(600px,100%);
-  height:76px;
-  background:#0b1121f5;
-  border-top:1px solid #253049;
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  backdrop-filter:blur(15px);
-  z-index:20;
-}
-
-.nav-btn{
-  background:transparent;
-  color:#7d89a2;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  font-size:20px;
-}
-
-.nav-btn small{
-  font-size:9px;
-}
-
-.nav-btn.active{
-  color:#ffc62e;
-}
-
-.center-play{
-  width:59px;
-  height:59px;
-  margin-top:-28px;
-  border-radius:50%;
-  border:5px solid #0b1121;
-  background:linear-gradient(135deg,#ffd347,#ff9e18);
-  font-size:24px;
-}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:#000b;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  z-index:50;
-}
-
-.modal.hide{
-  display:none;
-}
-
-.modal-box{
-  width:min(600px,100%);
-  min-height:250px;
-  padding:25px;
-  background:#10182b;
-  border:1px solid #2c3853;
-  border-radius:24px 24px 0 0;
-  position:relative;
-}
-
-.close{
-  position:absolute;
-  top:15px;
-  right:17px;
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  background:#202b42;
-  color:#fff;
-  font-size:24px;
-}
-
-.modal-box h2{
-  margin-bottom:20px;
-}
-
-.modal-box p{
-  color:#a2adc3;
-  padding:10px 0;
-  border-bottom:1px solid #222d44;
-}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:92px;
-  transform:translate(-50%,20px);
-  opacity:0;
-  background:#fff;
-  color:#111;
-  padding:11px 17px;
-  border-radius:12px;
-  font-size:13px;
-  z-index:100;
-  transition:.25s;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-/* MOBILE */
-@media(max-width:390px){
-
-  .hero{
-    padding:20px;
-  }
-
-  .hero h1{
-    font-size:25px;
-  }
-
-  .dice{
-    font-size:55px;
-  }
-
-  .menu{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LudoDhaba - Real Cash Ludo</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0f172a; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .app-container { width: 100%; max-width: 410px; background: #1e293b; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        .header { background: #0f172a; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+        .logo { font-size: 18px; font-weight: bold; color: #f59e0b; }
+        .wallet-box { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 14px; color: #22c55e; font-weight: bold; cursor: pointer; }
+        .content { padding: 16px; flex: 1; overflow-y: auto; }
+        .banner { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 15px; border-radius: 10px; color: #0f172a; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .section-title { font-size: 15px; color: #94a3b8; margin-bottom: 10px; font-weight: bold; }
+        .battle-card { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+        .battle-top { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+        .battle-middle { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .prize { font-size: 16px; font-weight: bold; color: #22c55e; }
+        .entry { font-size: 14px; color: #f59e0b; }
+        .btn-play { background: #22c55e; color: white; border: none; padding: 6px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-create { background: #ef4444; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; margin-bottom: 15px; cursor: pointer; }
+        .match-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .btn-win { background: #22c55e; color: white; flex: 1; padding: 6px; border: none; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .btn-loss { background: #ef4444; color: white; flex: 1; padding: 6px; border: none; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .bottom-nav { display: flex; background: #0f172a; border-top: 1px solid #334155; padding: 10px 0; justify-content: space-around; }
+        .nav-link { text-align: center; font-size: 11px; color: #94a3b8; cursor: pointer; }
+        .login-screen { padding: 40px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; }
+        .login-logo { font-size: 32px; font-weight: bold; color: #f59e0b; margin-bottom: 10px; }
+        .login-desc { color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+        .btn-google { width: 100%; padding: 14px; background: #ffffff; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    </style>
 </head>
-
 <body>
+    <div class="app-container">
+        <!-- LOGIN VIEW -->
+        <div id="login-view" class="login-screen">
+            <div class="login-logo">🎲 LudoDhaba</div>
+            <div class="login-desc">Google Account se safe login karein!</div>
+            <button class="btn-google" onclick="loginWithGoogle()">Sign in with Google</button>
+        </div>
 
-<div class="app">
-
-<!-- HEADER -->
-<header class="header">
-
-  <div class="logo">
-    <span class="crown">♛</span>
-    LUDO <span>BADSAH</span>
-  </div>
-
-  <button class="bell" onclick="notify()">🔔</button>
-
-</header>
-
-
-<!-- HERO -->
-<section class="hero">
-
-  <div>
-
-    <div class="small-title">WELCOME TO LUDO BADSAH</div>
-
-    <h1>
-      Play.<br>
-      Compete.<br>
-      <span>Become Badsah.</span>
-    </h1>
-
-    <p>
-      Join exciting Ludo matches and climb the leaderboard.
-    </p>
-
-    <button class="play-btn" onclick="playNow()">
-      PLAY NOW
-    </button>
-
-  </div>
-
-  <div class="dice">
-    🎲
-  </div>
-
-</section>
-
-
-<!-- WALLET -->
-<section class="wallet">
-
-  <div>
-    <small>VIRTUAL BALANCE</small>
-    <strong class="balance">₹ 1,250</strong>
-  </div>
-
-  <button class="wallet-btn" onclick="openModal('wallet')">
-    Wallet
-  </button>
-
-</section>
-
-
-<!-- QUICK MENU -->
-<div class="section-title">
-  <h2>Quick Menu</h2>
-</div>
-
-<section class="menu">
-
-  <button class="menu-card" onclick="openModal('profile')">
-    <span class="menu-icon">👤</span>
-    <b>Profile</b>
-    <small>Account</small>
-  </button>
-
-  <button class="menu-card" onclick="openModal('tournaments')">
-    <span class="menu-icon">🏆</span>
-    <b>Tournaments</b>
-    <small>Compete</small>
-  </button>
-
-  <button class="menu-card" onclick="openModal('history')">
-    <span class="menu-icon">📜</span>
-    <b>History</b>
-    <small>Records</small>
-  </button>
-
-  <button class="menu-card" onclick="openModal('refer')">
-    <span class="menu-icon">🎁</span>
-    <b>Refer & Earn</b>
-    <small>Invite</small>
-  </button>
-
-</section>
-
-
-<!-- TOURNAMENTS -->
-<div class="section-title">
-
-  <h2>Live Tournaments</h2>
-
-  <button class="view" onclick="openModal('tournaments')">
-    View all
-  </button>
-
-</div>
-
-
-<section class="tournaments">
-
-  <article class="tournament">
-
-    <div class="tournament-top">
-
-      <div>
-
-        <span class="live">● LIVE</span>
-
-        <h3>Royal Battle</h3>
-
-        <p>4 Players • Classic Ludo</p>
-
-      </div>
-
-      <div class="prize">
-        ₹500
-        <small>Prize Pool</small>
-      </div>
-
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard-view" style="display: none; flex-direction: column; height: 100%;">
+            <div class="header">
+                <div class="logo">🎲 LudoDhaba</div>
+                <div class="wallet-box" onclick="openWallet()">💰 <span id="balance-text">₹500</span></div>
+            </div>
+            <div class="content">
+                <div class="banner">🚀 Room Code Share Karein & Jeetein!</div>
+                <button class="btn-create" onclick="createChallenge()">+ Create Challenge</button>
+                <div class="section-title">Active Battles</div>
+                <div id="challenges-list"></div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-link" onclick="openWallet()">💳 Wallet</div>
+                <div class="nav-link" onclick="showProfile()">👤 Profile</div>
+            </div>
+        </div>
     </div>
 
-    <button class="join" onclick="join('Royal Battle')">
-      JOIN TOURNAMENT
-    </button>
-
-  </article>
-
-
-  <article class="tournament">
-
-    <div class="tournament-top">
-
-      <div>
-
-        <span class="live upcoming">UPCOMING</span>
-
-        <h3>Badsah Cup</h3>
-
-        <p>8 Players • Knockout</p>
-
-      </div>
-
-      <div class="prize">
-        ₹1,000
-        <small>Prize Pool</small>
-      </div>
-
-    </div>
-
-    <button class="join" onclick="join('Badsah Cup')">
-      JOIN TOURNAMENT
-    </button>
-
-  </article>
-
-</section>
-
-
-<!-- LEADERBOARD -->
-<div class="section-title">
-
-  <h2>Leaderboard</h2>
-
-  <button class="view" onclick="openModal('leaderboard')">
-    View all
-  </button>
-
-</div>
-
-
-<section class="leaderboard">
-
-  <div class="player">
-    <span class="rank">🥇</span>
-    <b>KingRavi</b>
-    <strong>2,840</strong>
-  </div>
-
-  <div class="player">
-    <span class="rank">🥈</span>
-    <b>LudoStar</b>
-    <strong>2,620</strong>
-  </div>
-
-  <div class="player">
-    <span class="rank">🥉</span>
-    <b>Badsah99</b>
-    <strong>2,410</strong>
-  </div>
-
-</section>
-
-</div>
-
-
-<!-- BOTTOM NAV -->
-<nav class="bottom">
-
-  <button class="nav-btn active" onclick="home()">
-    🏠
-    <small>Home</small>
-  </button>
-
-  <button class="nav-btn" onclick="openModal('tournaments')">
-    🏆
-    <small>Games</small>
-  </button>
-
-  <button class="center-play" onclick="playNow()">
-    🎲
-  </button>
-
-  <button class="nav-btn" onclick="openModal('history')">
-    📜
-    <small>History</small>
-  </button>
-
-  <button class="nav-btn" onclick="openModal('profile')">
-    👤
-    <small>Profile</small>
-  </button>
-
-</nav>
-
-
-<!-- MODAL -->
-<div class="modal hide" id="modal">
-
-  <div class="modal-box">
-
-    <button class="close" onclick="closeModal()">×</button>
-
-    <div id="modalContent"></div>
-
-  </div>
-
-</div>
-
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-
-<script>
-
-const modal = document.getElementById("modal");
-const content = document.getElementById("modalContent");
-const toast = document.getElementById("toast");
-
-function showToast(message){
-
-  toast.innerText = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer = setTimeout(function(){
-
-    toast.classList.remove("show");
-
-  },1800);
-
-}
-
-
-function notify(){
-
-  showToast("No new notifications");
-}
-
-
-function playNow(){
-
-  showToast("Game lobby opened");
-}
-
-
-function join(name){
-
-  showToast(name + " selected");
-}
-
-
-function home(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function closeModal(){
-
-  modal.classList.add("hide");
-
-}
-
-
-function openModal(type){
-
-  let title = "";
-  let html = "";
-
-  if(type === "wallet"){
-
-    title = "💰 My Wallet";
-
-    html = `
-      <p>Virtual Balance: <b>₹ 1,250</b></p>
-      <p>Winning Balance: ₹ 0</p>
-      <p>Bonus Balance: ₹ 0</p>
-      <br>
-      <button class="play-btn" onclick="showToast('Demo wallet')">
-        WALLET DETAILS
-      </button>
-    `;
-
-  }
-
-
-  if(type === "profile"){
-
-    title = "👤 My Profile";
-
-    html = `
-      <p>Username: <b>LudoBadsah01</b></p>
-      <p>Level: Badsah</p>
-      <p>Total Matches: 128</p>
-      <p>Wins: 74</p>
-    `;
-
-  }
-
-
-  if(type === "tournaments"){
-
-    title = "🏆 Tournaments";
-
-    html = `
-      <p>🎲 Royal Battle — ₹500 Prize Pool</p>
-      <p>👑 Badsah Cup — ₹1,000 Prize Pool</p>
-      <p>🔥 Mega Ludo — Coming Soon</p>
-    `;
-
-  }
-
-
-  if(type === "history"){
-
-    title = "📜 Match History";
-
-    html = `
-      <p>Royal Battle — Won</p>
-      <p>Badsah Cup — Lost</p>
-      <p>Classic Room — Won</p>
-      <p>Royal Room — Won</p>
-    `;
-
-  }
-
-
-  if(type === "refer"){
-
-    title = "🎁 Refer & Earn";
-
-    html = `
-      <p>Your Referral Code: <b>BADSAH01</b></p>
-
-      <br>
-
-      <button class="play-btn"
-      onclick="copyCode()">
-      COPY CODE
-      </button>
-    `;
-
-  }
-
-
-  if(type === "leaderboard"){
-
-    title = "🏆 Leaderboard";
-
-    html = `
-      <p>🥇 KingRavi — 2,840</p>
-      <p>🥈 LudoStar — 2,620</p>
-      <p>🥉 Badsah99 — 2,410</p>
-      <p>4️⃣ LudoKing — 2,200</p>
-      <p>5️⃣ Badsah01 — 2,050</p>
-    `;
-
-  }
-
-
-  content.innerHTML = `
-    <h2>${title}</h2>
-    ${html}
-  `;
-
-  modal.classList.remove("hide");
-
-}
-
-
-function copyCode(){
-
-  if(navigator.clipboard){
-
-    navigator.clipboard.writeText("BADSAH01");
-
-  }
-
-  showToast("Referral code copied");
-
-}
-
-
-modal.addEventListener("click",function(event){
-
-  if(event.target === modal){
-
-    closeModal();
-
-  }
-
-});
-
-</script>
-
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
+            authDomain: "ludo-badsah.firebaseapp.com",
+            databaseURL: "https://ludo-badsah-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ludo-badsah",
+            storageBucket: "ludo-badsah.appspot.com",
+            messagingSenderId: "1008082585739",
+            appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+        let currentUser = null;
+
+        window.loginWithGoogle = function() {
+            signInWithPopup(auth, provider).then((result) => {
+                currentUser = result.user;
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('dashboard-view').style.display = 'flex';
+                loadChallenges();
+            }).catch((error) => { alert('Error: ' + error.message); });
+        };
+
+        window.addNewChallengeToDB = function(fee, roomCode) {
+            const newRef = push(ref(db, 'challenges'));
+            set(newRef, { id: newRef.key, creator: currentUser ? currentUser.displayName : 'Player', entry: fee, prize: fee * 1.9, roomCode: roomCode });
+        };
+
+        window.loadChallenges = function() {
+            onValue(ref(db, 'challenges'), (snapshot) => {
+                const data = snapshot.val();
+                let list = document.getElementById('challenges-list');
+                list.innerHTML = '';
+                if(data) {
+                    Object.values(data).forEach(c => {
+                        list.innerHTML += `<div class="battle-card"><div class="battle-top"><span>Creator: ${c.creator}</span><span>Room: <b>${c.roomCode}</b></span></div><div class="battle-middle"><div class="entry">Entry: ₹${c.entry}</div><button class="btn-play" onclick="alert('Room Code: ${c.roomCode}')">Join</button></div><div class="match-actions"><button class="btn-win" onclick="remove(ref(db, 'challenges/${c.id}'))">🏆 Main Jeeta</button><button class="btn-loss" onclick="remove(ref(db, 'challenges/${c.id}'))">❌ Main Hara</button></div></div>`;
+                    });
+                }
+            });
+        };
+
+        window.showProfile = function() {
+            if(currentUser) alert('Naam: ' + currentUser.displayName + '\nEmail: ' + currentUser.email);
+        };
+    </script>
+
+    <script>
+        let walletBalance = 500;
+        function openWallet() {
+            let amt = prompt("Amount dalein:", "100");
+            if(amt && !isNaN(amt)) { walletBalance += Number(amt); document.getElementById('balance-text').innerText = '₹' + walletBalance; }
+        }
+        function createChallenge() {
+            let amt = prompt("Entry Fee:", "100");
+            if(amt && !isNaN(amt) && walletBalance >= Number(amt)) {
+                walletBalance -= Number(amt);
+                document.getElementById('balance-text').innerText = '₹' + walletBalance;
+                let roomCode = 'LUDO' + Math.floor(1000 + Math.random() * 9000);
+                window.addNewChallengeToDB(Number(amt), roomCode);
+                alert('Room Code ban gaya: ' + roomCode);
+            } else { alert('Balance kam hai ya galat amount hai!'); }
+        }
+    </script>
 </body>
-  </html>
+</html>
+
