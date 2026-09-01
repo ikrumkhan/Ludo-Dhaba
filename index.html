@@ -4,159 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LudoDhaba - Real Cash Ludo</title>
-    
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background-color: #0f172a;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 410px;
-            background: #1e293b;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
-        .header {
-            background: #0f172a;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #334155;
-        }
-        .logo {
-            font-size: 18px;
-            font-weight: bold;
-            color: #f59e0b;
-        }
-        .wallet-box {
-            background: #334155;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #22c55e;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .content {
-            padding: 16px;
-            flex: 1;
-            overflow-y: auto;
-        }
-        .banner {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            padding: 15px;
-            border-radius: 10px;
-            color: #0f172a;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .section-title {
-            font-size: 15px;
-            color: #94a3b8;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .battle-card {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-        .battle-top {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 8px;
-        }
-        .battle-middle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .prize {
-            font-size: 16px;
-            font-weight: bold;
-            color: #22c55e;
-        }
-        .entry {
-            font-size: 14px;
-            color: #f59e0b;
-        }
-        .btn-play {
-            background: #22c55e;
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-create {
-            background: #ef4444;
-            color: white;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-        .match-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .btn-win {
-            background: #22c55e;
-            color: white;
-            flex: 1;
-            padding: 6px;
-            border: none;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-loss {
-            background: #ef4444;
-            color: white;
-            flex: 1;
-            padding: 6px;
-            border: none;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .bottom-nav {
-            display: flex;
-            background: #0f172a;
-            border-top: 1px solid #334155;
-            padding: 10px 0;
-            justify-content: space-around;
-        }
-        .nav-link {
-            text-align: center;
-            
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0f172a; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .app-container { width: 100%; max-width: 410px; background: #1e293b; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        .header { background: #0f172a; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+        .logo { font-size: 18px; font-weight: bold; color: #f59e0b; }
+        .wallet-box { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 14px; color: #22c55e; font-weight: bold; cursor: pointer; }
+        .content { padding: 16px; flex: 1; overflow-y: auto; }
+        .banner { background: linear-gradient(135deg, #f59e0b, #d97706); padding: 15px; border-radius: 10px; color: #0f172a; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .section-title { font-size: 15px; color: #94a3b8; margin-bottom: 10px; font-weight: bold; }
+        .battle-card { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+        .battle-top { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+        .battle-middle { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .prize { font-size: 16px; font-weight: bold; color: #22c55e; }
+        .entry { font-size: 14px; color: #f59e0b; }
+        .btn-play { background: #22c55e; color: white; border: none; padding: 6px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-create { background: #ef4444; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; margin-bottom: 15px; cursor: pointer; }
+        .match-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .btn-win { background: #22c55e; color: white; flex: 1; padding: 6px; border: none; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .btn-loss { background: #ef4444; color: white; flex: 1; padding: 6px; border: none; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .bottom-nav { display: flex; background: #0f172a; border-top: 1px solid #334155; padding: 10px 0; justify-content: space-around; }
+        .nav-link { text-align: center; font-size: 11px; color: #94a3b8; cursor: pointer; }
+        .login-screen { padding: 40px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; }
+        .login-logo { font-size: 32px; font-weight: bold; color: #f59e0b; margin-bottom: 10px; }
+        .login-desc { color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+        .btn-google { width: 100%; padding: 14px; background: #ffffff; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- LOGIN VIEW -->
+        <div id="login-view" class="login-screen">
+            <div class="login-logo">🎲 LudoDhaba</div>
+            <div class="login-desc">Google Account se safe login karein!</div>
+            <button class="btn-google" onclick="loginWithGoogle()">Sign in with Google</button>
+        </div>
 
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard-view" style="display: none; flex-direction: column; height: 100%;">
+            <div class="header">
+                <div class="logo">🎲 LudoDhaba</div>
+                <div class="wallet-box" onclick="openWallet()">💰 <span id="balance-text">₹500</span></div>
+            </div>
+            <div class="content">
+                <div class="banner">🚀 Room Code Share Karein & Jeetein!</div>
+                <button class="btn-create" onclick="createChallenge()">+ Create Challenge</button>
+                <div class="section-title">Active Battles</div>
+                <div id="challenges-list"></div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-link" onclick="openWallet()">💳 Wallet</div>
+                <div class="nav-link" onclick="showProfile()">👤 Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
+            authDomain: "ludo-badsah.firebaseapp.com",
+            databaseURL: "https://ludo-badsah-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ludo-badsah",
+            storageBucket: "ludo-badsah.appspot.com",
+            messagingSenderId: "1008082585739",
+            appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+        let currentUser = null;
+
+        window.loginWithGoogle = function() {
+            signInWithPopup(auth, provider).then((result) => {
+                currentUser = result.user;
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('dashboard-view').style.display = 'flex';
+                loadChallenges();
+            }).catch((error) => { alert('Error: ' + error.message); });
+        };
+
+        window.addNewChallengeToDB = function(fee, roomCode) {
+            const newRef = push(ref(db, 'challenges'));
+            set(newRef, { id: newRef.key, creator: currentUser ? currentUser.displayName : 'Player', entry: fee, prize: fee * 1.9, roomCode: roomCode });
+        };
+
+        window.loadChallenges = function() {
+            onValue(ref(db, 'challenges'), (snapshot) => {
+                const data = snapshot.val();
+                let list = document.getElementById('challenges-list');
+                list.innerHTML = '';
+                if(data) {
+                    Object.values(data).forEach(c => {
+                        list.innerHTML += `<div class="battle-card"><div class="battle-top"><span>Creator: ${c.creator}</span><span>Room: <b>${c.roomCode}</b></span></div><div class="battle-middle"><div class="entry">Entry: ₹${c.entry}</div><button class="btn-play" onclick="alert('Room Code: ${c.roomCode}')">Join</button></div><div class="match-actions"><button class="btn-win" onclick="remove(ref(db, 'challenges/${c.id}'))">🏆 Main Jeeta</button><button class="btn-loss" onclick="remove(ref(db, 'challenges/${c.id}'))">❌ Main Hara</button></div></div>`;
+                    });
+                }
+            });
+        };
+
+        window.showProfile = function() {
+            if(currentUser) alert('Naam: ' + currentUser.displayName + '\nEmail: ' + currentUser.email);
+        };
+    </script>
+
+    <script>
+        let walletBalance = 500;
+        function openWallet() {
+            let amt = prompt("Amount dalein:", "100");
+            if(amt && !isNaN(amt)) { walletBalance += Number(amt); document.getElementById('balance-text').innerText = '₹' + walletBalance; }
+        }
+        function createChallenge() {
+            let amt = prompt("Entry Fee:", "100");
+            if(amt && !isNaN(amt) && walletBalance >= Number(amt)) {
+                walletBalance -= Number(amt);
+                document.getElementById('balance-text').innerText = '₹' + walletBalance;
+                let roomCode = 'LUDO' + Math.floor(1000 + Math.random() * 9000);
+                window.addNewChallengeToDB(Number(amt), roomCode);
+                alert('Room Code ban gaya: ' + roomCode);
+            } else { alert('Balance kam hai ya galat amount hai!'); }
+        }
+    </script>
+</body>
+</html>
