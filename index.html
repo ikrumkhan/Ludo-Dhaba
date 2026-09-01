@@ -122,6 +122,33 @@
             margin-bottom: 15px;
             cursor: pointer;
         }
+        .match-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-win {
+            background: #22c55e;
+            color: white;
+            flex: 1;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-loss {
+            background: #ef4444;
+            color: white;
+            flex: 1;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
         .bottom-nav {
             display: flex;
             background: #0f172a;
@@ -131,209 +158,5 @@
         }
         .nav-link {
             text-align: center;
-            font-size: 11px;
-            color: #94a3b8;
-            cursor: pointer;
-        }
-        .nav-link.active {
-            color: #f59e0b;
-            font-weight: bold;
-        }
-        .login-screen {
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            text-align: center;
-        }
-        .login-logo {
-            font-size: 32px;
-            font-weight: bold;
-            color: #f59e0b;
-            margin-bottom: 10px;
-        }
-        .login-desc {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-        .btn-google {
-            width: 100%;
-            padding: 14px;
-            background: #ffffff;
-            color: #0f172a;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="app-container">
-        <!-- LOGIN VIEW -->
-        <div id="login-view" class="login-screen">
-            <div class="login-logo">🎲 LudoDhaba</div>
-            <div class="login-desc">Apne Google Account se surakshit login karein aur Ludo battles kheleing!</div>
-            <button class="btn-google" onclick="loginWithGoogle()">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.14C3.15 21.32 7.23 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.62H1.18C.43 8.14 0 9.87 0 11.75s.43 3.61 1.18 5.13l4.09-2.64z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.15 2.68 1.18 6.62l4.09 3.14c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
-                Sign in with Google
-            </button>
-        </div>
-
-        <!-- DASHBOARD VIEW -->
-        <div id="dashboard-view" style="display: none; flex-direction: column; height: 100%;">
-            <div class="header">
-                <div class="logo">🎲 LudoDhaba</div>
-                <div class="wallet-box" onclick="openWallet()">💰 <span id="balance-text">₹500</span></div>
-            </div>
-
-            <div class="content">
-                <div class="banner">
-                    🚀 Ludo Khelein aur Real Cash Jeetein!
-                </div>
-
-                <button class="btn-create" onclick="createChallenge()">+ Create Challenge</button>
-
-                <div class="section-title">Active Battles & Room Codes</div>
-                
-                <div id="challenges-list">
-                    <div class="battle-card">
-                        <div class="battle-top">
-                            <span>Creator: Admin</span>
-                            <span>Classic Mode</span>
-                        </div>
-                        <div class="battle-middle">
-                            <div>
-                                <div class="entry">Entry: ₹100</div>
-                                <div class="prize">Prize: ₹190</div>
-                            </div>
-                            <button class="btn-play" onclick="joinBattle(100, 'ROOM9876')">Play</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bottom-nav">
-                <div class="nav-link active" onclick="switchTab('home')">🏠<br>Home</div>
-                <div class="nav-link" onclick="openWallet()">💳<br>Wallet</div>
-                <div class="nav-link" onclick="showHistory()">📜<br>History</div>
-                <div class="nav-link" onclick="showProfile()">👤<br>Profile</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
-            authDomain: "ludo-badsah.firebaseapp.com",
-            projectId: "ludo-badsah",
-            storageBucket: "ludo-badsah.appspot.com",
-            messagingSenderId: "1008082585739",
-            appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        let currentUser = null;
-
-        window.loginWithGoogle = function() {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    currentUser = result.user;
-                    document.getElementById('login-view').style.display = 'none';
-                    document.getElementById('dashboard-view').style.display = 'flex';
-                    alert('Swagat hai, ' + currentUser.displayName + '!');
-                }).catch((error) => {
-                    console.error(error);
-                    alert('Login mein error aayi: ' + error.message);
-                });
-        }
-
-        window.showProfile = function() {
-            if(currentUser) {
-                alert('👤 User Profile\nNaam: ' + currentUser.displayName + '\nEmail: ' + currentUser.email);
-            }
-        }
-    </script>
-
-    <script>
-        let walletBalance = 500;
-
-        function openWallet() {
-            let amt = prompt("Kitna amount add karna hai?", "100");
-            if(amt && !isNaN(amt) && Number(amt) > 0) {
-                walletBalance += Number(amt);
-                document.getElementById('balance-text').innerText = '₹' + walletBalance;
-                alert('Successfully ₹' + amt + ' add ho gaye!');
-            }
-        }
-
-        function createChallenge() {
-            let amt = prompt("Battle Amount dalein (Jaise: 50, 100):", "100");
-            if(amt && !isNaN(amt)) {
-                let fee = Number(amt);
-                if(walletBalance >= fee) {
-                    walletBalance -= fee;
-                    document.getElementById('balance-text').innerText = '₹' + walletBalance;
-                    
-                    let roomCode = 'LUDO' + Math.floor(1000 + Math.random() * 9000);
-                    let prizeCalc = fee * 1.9;
-                    let list = document.getElementById('challenges-list');
-                    
-                    list.innerHTML += `
-                        <div class="battle-card">
-                            <div class="battle-top">
-                                <span>Creator: You</span>
-                                <span>Room Code: <b>${roomCode}</b></span>
-                            </div>
-                            <div class="battle-middle">
-                                <div>
-                                    <div class="entry">Entry: ₹${fee}</div>
-                                    <div class="prize">Prize: ₹${prizeCalc}</div>
-                                </div>
-                                <span style="color: #22c55e; font-size: 13px; font-weight: bold;">Active</span>
-                            </div>
-                        </div>
-                    `;
-                    alert('Challenge ban gaya! Aapka Room Code hai: ' + roomCode);
-                } else {
-                    alert('Wallet mein paryapt balance nahi hai!');
-                }
-            }
-        }
-
-        function joinBattle(amount, roomCode) {
-            if(walletBalance >= amount) {
-                if(confirm('Aap ₹' + amount + ' ki battle join karna chahte hain?')) {
-                    walletBalance -= amount;
-                    document.getElementById('balance-text').innerText = '₹' + walletBalance;
-                    alert('Battle join ho gayi! Ludo game ka Room Code hai: ' + roomCode);
-                }
-            } else {
-                alert('Pehle wallet mein paise add karein!');
-            }
-        }
-
-        function showHistory() {
-            alert('📜 Transaction History\n- Shuruwati Balance: ₹500\n- Sabhi match aur wallet ki history yahan save rahegi.');
-        }
-    </script>
-</body>
-</html>
+            
 
