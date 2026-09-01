@@ -11,6 +11,7 @@
 
     <div class="max-w-md mx-auto min-h-screen bg-[#0b061e] border-x border-purple-950 relative">
 
+        <!-- Top Header -->
         <div class="flex justify-between items-center p-4 bg-[#140b32] border-b border-purple-950 sticky top-0 z-50">
             <div class="flex items-center space-x-2">
                 <span class="text-xl">🎲</span>
@@ -22,53 +23,67 @@
             </div>
         </div>
 
-        <div id="authScreen" class="p-6 space-y-6">
+        <!-- ================= 1. REGISTER SCREEN (Default) ================= -->
+        <div id="screenRegister" class="p-6 space-y-5">
+            <div class="text-center space-y-2 mt-2">
+                <div class="w-16 h-16 bg-gradient-to-tr from-orange-500 to-yellow-400 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg">
+                    🎲
+                </div>
+                <h1 class="text-xl font-bold text-white">Create Account</h1>
+                <p class="text-xs text-gray-400">Pehle Register karein fir game khele!</p>
+            </div>
+
+            <div class="bg-[#140b32] p-5 rounded-2xl border border-purple-900/60 space-y-3 shadow-xl">
+                <div>
+                    <label class="text-[10px] text-gray-400">Full Name</label>
+                    <input type="text" id="rName" value="Ikrum" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-3 text-xs text-white mt-1 outline-none focus:border-yellow-400">
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-400">Email Address</label>
+                    <input type="email" id="rEmail" value="mohdikrum@gmail.com" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-3 text-xs text-white mt-1 outline-none focus:border-yellow-400">
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-400">Password</label>
+                    <input type="password" id="rPass" value="123456" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-3 text-xs text-white mt-1 outline-none focus:border-yellow-400">
+                </div>
+                <button type="button" onclick="handleRegisterSubmit()" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg mt-2 cursor-pointer active:scale-95 transition">Register & Enter App</button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-xs text-gray-400">Already have an account? <button type="button" onclick="switchScreen('login')" class="text-yellow-400 font-bold underline cursor-pointer">Login here</button></p>
+            </div>
+        </div>
+
+        <!-- ================= 2. LOGIN SCREEN (Hidden by default) ================= -->
+        <div id="screenLogin" class="p-6 space-y-5 hidden">
             <div class="text-center space-y-2 mt-4">
                 <div class="w-16 h-16 bg-gradient-to-tr from-orange-500 to-yellow-400 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg">
                     🎲
                 </div>
-                <h1 class="text-xl font-bold text-white">Welcome to LudoDhaba</h1>
-                <p class="text-xs text-gray-400">Pehle Account Banayein (Register), Fir Khelein!</p>
+                <h1 class="text-xl font-bold text-white">Welcome Back</h1>
+                <p class="text-xs text-gray-400">Apne account me Login karein</p>
             </div>
 
-            <div class="flex bg-[#140b32] p-1 rounded-xl border border-purple-900">
-                <button type="button" id="tabReg" onclick="showForm('register')" class="w-1/2 py-2 text-xs font-bold rounded-lg bg-yellow-500 text-gray-950 transition">Register</button>
-                <button type="button" id="tabLog" onclick="showForm('login')" class="w-1/2 py-2 text-xs font-bold rounded-lg text-gray-400 transition">Login</button>
-            </div>
-
-            <div id="boxRegister" class="bg-[#140b32] p-5 rounded-2xl border border-purple-900/60 space-y-3 shadow-xl">
-                <h2 class="text-xs font-bold text-yellow-400 uppercase tracking-wider">New User Registration</h2>
-                <div>
-                    <label class="text-[10px] text-gray-400">Full Name</label>
-                    <input type="text" id="rName" placeholder="Aapka Naam" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1 outline-none focus:border-yellow-400">
-                </div>
+            <div class="bg-[#140b32] p-5 rounded-2xl border border-purple-900/60 space-y-3 shadow-xl">
                 <div>
                     <label class="text-[10px] text-gray-400">Email Address</label>
-                    <input type="email" id="rEmail" placeholder="name@example.com" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1 outline-none focus:border-yellow-400">
+                    <input type="email" id="lEmail" placeholder="name@example.com" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-3 text-xs text-white mt-1 outline-none focus:border-yellow-400">
                 </div>
                 <div>
                     <label class="text-[10px] text-gray-400">Password</label>
-                    <input type="password" id="rPass" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1 outline-none focus:border-yellow-400">
+                    <input type="password" id="lPass" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-3 text-xs text-white mt-1 outline-none focus:border-yellow-400">
                 </div>
-                <button type="button" onclick="executeRegister()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg text-xs shadow-lg mt-2">Register & Enter App</button>
+                <button type="button" onclick="handleLoginSubmit()" class="w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-gray-950 font-bold py-3.5 rounded-xl text-xs shadow-lg mt-2 cursor-pointer active:scale-95 transition">Login to Account</button>
             </div>
 
-            <div id="boxLogin" class="bg-[#140b32] p-5 rounded-2xl border border-purple-900/60 space-y-3 shadow-xl hidden">
-                <h2 class="text-xs font-bold text-yellow-400 uppercase tracking-wider">Existing User Login</h2>
-                <div>
-                    <label class="text-[10px] text-gray-400">Email Address</label>
-                    <input type="email" id="lEmail" placeholder="name@example.com" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1 outline-none focus:border-yellow-400">
-                </div>
-                <div>
-                    <label class="text-[10px] text-gray-400">Password</label>
-                    <input type="password" id="lPass" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1 outline-none focus:border-yellow-400">
-                </div>
-                <button type="button" onclick="executeLogin()" class="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-950 font-bold py-3 rounded-lg text-xs shadow-lg mt-2">Login to Account</button>
+            <div class="text-center">
+                <p class="text-xs text-gray-400">Don't have an account? <button type="button" onclick="switchScreen('register')" class="text-yellow-400 font-bold underline cursor-pointer">Register here</button></p>
             </div>
         </div>
 
-        <div id="mainDashboard" class="hidden p-4 space-y-4">
-            <div class="bg-gradient-to-r from-purple-900/60 to-indigo-900/60 p-4 rounded-2xl border border-purple-500/30 flex justify-between items-center">
+        <!-- ================= 3. MAIN DASHBOARD ================= -->
+        <div id="screenDashboard" class="hidden p-4 space-y-4">
+            <div class="bg-gradient-to-r from-purple-900/60 to-indigo-900/60 p-4 rounded-2xl border border-purple-500/30 flex justify-between items-center shadow-lg">
                 <div>
                     <h2 class="font-bold text-sm text-yellow-400" id="welcomeMsg">Hi, User</h2>
                     <p class="text-[11px] text-gray-300">Ready to win cash?</p>
@@ -78,142 +93,150 @@
                 </div>
             </div>
 
-            <button type="button" onclick="openModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2">
+            <button type="button" onclick="openModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
                 <i class="fa-solid fa-plus-circle"></i>
                 <span>Create Ludo Challenge</span>
             </button>
 
             <div class="space-y-2">
                 <h3 class="font-bold text-xs text-gray-300">Active Battles</h3>
-                <div class="bg-[#140b32] p-3 rounded-xl border border-purple-900/50 flex justify-between items-center">
+                <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow">
                     <div>
                         <p class="text-xs text-gray-300">Creator: <span class="text-white font-bold">Admin</span></p>
-                        <p class="text-xs text-yellow-400 font-bold">Room: LUDO1234</p>
+                        <p class="text-xs text-yellow-400 font-bold">Room: LUDO9999</p>
                         <p class="text-xs text-green-400 font-semibold">Entry: ₹100 | Win: ₹190</p>
                     </div>
-                    <button type="button" onclick="alert('Battle Joined Successfully!')" class="bg-green-600 px-3 py-1.5 rounded-lg text-xs font-bold text-white">Join</button>
+                    <button type="button" onclick="alert('Battle Joined!')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow cursor-pointer">Join</button>
                 </div>
             </div>
         </div>
 
-        <div id="walletSection" class="hidden p-4 space-y-4">
-            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 space-y-3">
+        <!-- ================= 4. WALLET SECTION ================= -->
+        <div id="screenWallet" class="hidden p-4 space-y-4">
+            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 space-y-3 shadow-lg">
                 <div class="flex justify-between items-center border-b border-purple-950 pb-3">
                     <div>
                         <p class="text-[10px] text-gray-400">Total Balance</p>
                         <h2 class="text-xl font-bold text-green-400" id="walletBalText">₹0</h2>
                     </div>
                     <div class="space-x-1">
-                        <button type="button" onclick="walletSubTab('add')" id="subAddBtn" class="bg-green-600 text-white px-3 py-1 rounded text-xs font-bold">Add</button>
-                        <button type="button" onclick="walletSubTab('wit')" id="subWitBtn" class="bg-gray-700 text-gray-300 px-3 py-1 rounded text-xs font-bold">Withdraw</button>
+                        <button type="button" onclick="walletSubTab('add')" id="subAddBtn" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow">Add</button>
+                        <button type="button" onclick="walletSubTab('wit')" id="subWitBtn" class="bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-xs font-bold shadow">Withdraw</button>
                     </div>
                 </div>
 
-                <div id="addBox" class="space-y-2">
+                <!-- Add Money Box -->
+                <div id="addBox" class="space-y-2.5">
                     <p class="text-[11px] text-gray-300">UPI ID: <span class="text-yellow-400 font-bold">ludodhaba@upi</span></p>
                     <div>
                         <label class="text-[10px] text-gray-400">Amount (₹)</label>
-                        <input type="number" id="addAmt" placeholder="500" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2 text-xs text-white mt-1">
+                        <input type="number" id="addAmt" placeholder="500" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1">
                     </div>
                     <div>
                         <label class="text-[10px] text-gray-400">12-Digit UTR Number</label>
-                        <input type="text" id="addUtr" placeholder="UTR Transaction ID" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2 text-xs text-white mt-1">
+                        <input type="text" id="addUtr" placeholder="UTR Transaction ID" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1">
                     </div>
-                    <button type="button" onclick="processDeposit()" class="w-full bg-purple-600 text-white font-bold py-2 rounded text-xs">Submit Deposit</button>
+                    <button type="button" onclick="processDeposit()" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-xs shadow cursor-pointer">Submit Deposit</button>
                 </div>
 
-                <div id="witBox" class="space-y-2 hidden">
+                <!-- Withdraw Box -->
+                <div id="witBox" class="space-y-2.5 hidden">
                     <div>
                         <label class="text-[10px] text-gray-400">Amount (Min ₹100)</label>
-                        <input type="number" id="witAmt" placeholder="100" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2 text-xs text-white mt-1">
+                        <input type="number" id="witAmt" placeholder="100" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1">
                     </div>
                     <div>
                         <label class="text-[10px] text-gray-400">UPI ID</label>
-                        <input type="text" id="witUpi" placeholder="username@oksbi" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2 text-xs text-white mt-1">
+                        <input type="text" id="witUpi" placeholder="username@oksbi" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg p-2.5 text-xs text-white mt-1">
                     </div>
-                    <button type="button" onclick="processWithdraw()" class="w-full bg-red-600 text-white font-bold py-2 rounded text-xs">Request Withdrawal</button>
+                    <button type="button" onclick="processWithdraw()" class="w-full bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs shadow cursor-pointer">Request Withdrawal</button>
                 </div>
             </div>
         </div>
 
-        <div id="profileSection" class="hidden p-4 space-y-4">
-            <div class="bg-[#140b32] p-5 rounded-xl border border-purple-900/50 text-center space-y-3">
-                <div class="w-16 h-16 bg-purple-600 mx-auto rounded-full flex items-center justify-center text-2xl font-bold" id="profAvatar">U</div>
+        <!-- ================= 5. PROFILE SECTION ================= -->
+        <div id="screenProfile" class="hidden p-4 space-y-4">
+            <div class="bg-[#140b32] p-5 rounded-xl border border-purple-900/50 text-center space-y-3 shadow-lg">
+                <div class="w-16 h-16 bg-purple-600 mx-auto rounded-full flex items-center justify-center text-2xl font-bold shadow" id="profAvatar">U</div>
                 <div>
                     <h3 id="profName" class="font-bold text-sm text-white">Name</h3>
                     <p id="profEmail" class="text-xs text-gray-400">email@test.com</p>
                 </div>
-                <button type="button" onclick="logoutUser()" class="w-full bg-red-600 text-white font-bold py-2 rounded text-xs">Logout Account</button>
+                <button type="button" onclick="logoutUser()" class="w-full bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs shadow cursor-pointer">Logout Account</button>
             </div>
         </div>
 
-        <div id="bottomNav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 z-50 text-xs">
-            <button type="button" onclick="switchNav('main')" id="navMain" class="text-purple-400 flex flex-col items-center">
-                <i class="fa-solid fa-gamepad text-sm"></i>
+        <!-- BOTTOM NAV BAR (Visible only when logged in) -->
+        <div id="bottomNav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 z-50 text-xs shadow-lg">
+            <button type="button" onclick="switchNav('dashboard')" id="navDashboard" class="text-purple-400 flex flex-col items-center cursor-pointer">
+                <i class="fa-solid fa-gamepad text-base"></i>
                 <span class="text-[10px]">Play</span>
             </button>
-            <button type="button" onclick="switchNav('wallet')" id="navWallet" class="text-gray-400 flex flex-col items-center">
-                <i class="fa-solid fa-wallet text-sm"></i>
+            <button type="button" onclick="switchNav('wallet')" id="navWallet" class="text-gray-400 flex flex-col items-center cursor-pointer">
+                <i class="fa-solid fa-wallet text-base"></i>
                 <span class="text-[10px]">Wallet</span>
             </button>
-            <button type="button" onclick="switchNav('profile')" id="navProfile" class="text-gray-400 flex flex-col items-center">
-                <i class="fa-solid fa-user text-sm"></i>
+            <button type="button" onclick="switchNav('profile')" id="navProfile" class="text-gray-400 flex flex-col items-center cursor-pointer">
+                <i class="fa-solid fa-user text-base"></i>
                 <span class="text-[10px]">Profile</span>
             </button>
         </div>
 
+        <!-- MODAL -->
         <div id="challengeModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div class="bg-[#140b32] border border-purple-900 p-4 rounded-xl w-full max-w-xs space-y-3">
+            <div class="bg-[#140b32] border border-purple-900 p-4 rounded-xl w-full max-w-xs space-y-3 shadow-2xl">
                 <h3 class="font-bold text-sm text-yellow-400">Create Ludo Challenge</h3>
                 <div>
                     <label class="text-[10px] text-gray-400">Entry Amount (₹)</label>
-                    <input type="number" id="cAmount" placeholder="100" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2 text-xs text-white mt-1">
+                    <input type="number" id="cAmount" placeholder="100" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2.5 text-xs text-white mt-1">
                 </div>
                 <div>
                     <label class="text-[10px] text-gray-400">Room Code</label>
-                    <input type="text" id="cCode" placeholder="123456" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2 text-xs text-white mt-1">
+                    <input type="text" id="cCode" placeholder="123456" class="w-full bg-[#0b061e] border border-purple-500/40 rounded p-2.5 text-xs text-white mt-1">
                 </div>
                 <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="alert('Challenge Created!')" class="w-full bg-green-600 text-white font-bold py-2 rounded text-xs">Publish</button>
-                    <button type="button" onclick="closeModal()" class="w-full bg-gray-600 text-white font-bold py-2 rounded text-xs">Cancel</button>
+                    <button type="button" onclick="alert('Challenge Created!')" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Publish</button>
+                    <button type="button" onclick="closeModal()" class="w-full bg-gray-600 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Cancel</button>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- SCRIPT -->
     <script>
         let currentUser = JSON.parse(localStorage.getItem('ld_user')) || null;
         let userBal = Number(localStorage.getItem('ld_bal')) || 0;
 
         window.onload = function() {
             if(currentUser) {
-                appStarted();
+                showScreen('dashboard');
             } else {
-                showForm('register');
+                showScreen('register');
             }
         }
 
-        function showForm(type) {
-            const rBox = document.getElementById('boxRegister');
-            const lBox = document.getElementById('boxLogin');
-            const tReg = document.getElementById('tabReg');
-            const tLog = document.getElementById('tabLog');
-
-            if(type === 'register') {
-                rBox.classList.remove('hidden');
-                lBox.classList.add('hidden');
-                tReg.className = "w-1/2 py-2 text-xs font-bold rounded-lg bg-yellow-500 text-gray-950 transition";
-                tLog.className = "w-1/2 py-2 text-xs font-bold rounded-lg text-gray-400 transition";
-            } else {
-                rBox.classList.add('hidden');
-                lBox.classList.remove('hidden');
-                tLog.className = "w-1/2 py-2 text-xs font-bold rounded-lg bg-yellow-500 text-gray-950 transition";
-                tReg.className = "w-1/2 py-2 text-xs font-bold rounded-lg text-gray-400 transition";
+        function switchScreen(screenName) {
+            if(screenName === 'register') {
+                document.getElementById('screenRegister').classList.remove('hidden');
+                document.getElementById('screenLogin').classList.add('hidden');
+                document.getElementById('screenDashboard').classList.add('hidden');
+                document.getElementById('screenWallet').classList.add('hidden');
+                document.getElementById('screenProfile').classList.add('hidden');
+                document.getElementById('walletHeader').classList.add('hidden');
+                document.getElementById('bottomNav').classList.add('hidden');
+            } else if(screenName === 'login') {
+                document.getElementById('screenRegister').classList.add('hidden');
+                document.getElementById('screenLogin').classList.remove('hidden');
+                document.getElementById('screenDashboard').classList.add('hidden');
+                document.getElementById('screenWallet').classList.add('hidden');
+                document.getElementById('screenProfile').classList.add('hidden');
+                document.getElementById('walletHeader').classList.add('hidden');
+                document.getElementById('bottomNav').classList.add('hidden');
             }
         }
 
-        function executeRegister() {
+        function handleRegisterSubmit() {
             const name = document.getElementById('rName').value.trim();
             const email = document.getElementById('rEmail').value.trim();
             const pass = document.getElementById('rPass').value.trim();
@@ -229,10 +252,10 @@
             userBal = 0;
 
             alert("Registration Successful!");
-            appStarted();
+            showScreen('dashboard');
         }
 
-        function executeLogin() {
+        function handleLoginSubmit() {
             const email = document.getElementById('lEmail').value.trim();
             const pass = document.getElementById('lPass').value.trim();
 
@@ -245,124 +268,71 @@
             localStorage.setItem('ld_user', JSON.stringify(currentUser));
 
             alert("Login Successful!");
-            appStarted();
+            showScreen('dashboard');
         }
 
-        function appStarted() {
-            document.getElementById('authScreen').classList.add('hidden');
-            document.getElementById('mainDashboard').classList.remove('hidden');
-            document.getElementById('walletHeader').classList.remove('hidden');
-            document.getElementById('bottomNav').classList.remove('hidden');
+        function showScreen(name) {
+            const sReg = document.getElementById('screenRegister');
+            const sLog = document.getElementById('screenLogin');
+            const sDash = document.getElementById('screenDashboard');
+            const sWallet = document.getElementById('screenWallet');
+            const sProf = document.getElementById('screenProfile');
+            const wHeader = document.getElementById('walletHeader');
+            const bNav = document.getElementById('bottomNav');
 
-            document.getElementById('welcomeMsg').textContent = "Hi, " + currentUser.name;
-            document.getElementById('profName').textContent = currentUser.name;
-            document.getElementById('profEmail').textContent = currentUser.email;
-            document.getElementById('profAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            sReg.classList.add('hidden');
+            sLog.classList.add('hidden');
+            sDash.classList.add('hidden');
+            sWallet.classList.add('hidden');
+            sProf.classList.add('hidden');
 
-            updateWalletDisplay();
+            document.getElementById('navDashboard').className = "text-gray-400 flex flex-col items-center cursor-pointer";
+            document.getElementById('navWallet').className = "text-gray-400 flex flex-col items-center cursor-pointer";
+            document.getElementById('navProfile').className = "text-gray-400 flex flex-col items-center cursor-pointer";
+
+            if(name === 'register') {
+                sReg.classList.remove('hidden');
+                wHeader.classList.add('hidden');
+                bNav.classList.add('hidden');
+            } else if(name === 'login') {
+                sLog.classList.remove('hidden');
+                wHeader.classList.add('hidden');
+                bNav.classList.add('hidden');
+            } else if(name === 'dashboard') {
+                sDash.classList.remove('hidden');
+                wHeader.classList.remove('hidden');
+                bNav.classList.remove('hidden');
+                document.getElementById('navDashboard').className = "text-purple-400 flex flex-col items-center cursor-pointer";
+                setupUserData();
+            } else if(name === 'wallet') {
+                sWallet.classList.remove('hidden');
+                wHeader.classList.remove('hidden');
+                bNav.classList.remove('hidden');
+                document.getElementById('navWallet').className = "text-purple-400 flex flex-col items-center cursor-pointer";
+                setupUserData();
+            } else if(name === 'profile') {
+                sProf.classList.remove('hidden');
+                wHeader.classList.remove('hidden');
+                bNav.classList.remove('hidden');
+                document.getElementById('navProfile').className = "text-purple-400 flex flex-col items-center cursor-pointer";
+                setupUserData();
+            }
+        }
+
+        function setupUserData() {
+            if(currentUser) {
+                document.getElementById('welcomeMsg').textContent = "Hi, " + currentUser.name;
+                document.getElementById('profName').textContent = currentUser.name;
+                document.getElementById('profEmail').textContent = currentUser.email;
+                document.getElementById('profAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+                document.getElementById('headBal').textContent = "₹" + userBal;
+                document.getElementById('walletBalText').textContent = "₹" + userBal;
+            }
+        }
+
+        function switchNav(tabName) {
+            showScreen(tabName);
         }
 
         function logoutUser() {
-            localStorage.removeItem('ld_user');
-            currentUser = null;
-            location.reload();
-        }
-
-        function updateWalletDisplay() {
-            document.getElementById('headBal').textContent = "₹" + userBal;
-            document.getElementById('walletBalText').textContent = "₹" + userBal;
-        }
-
-        function switchNav(tab) {
-            const main = document.getElementById('mainDashboard');
-            const wallet = document.getElementById('walletSection');
-            const profile = document.getElementById('profileSection');
-
-            main.classList.add('hidden');
-            wallet.classList.add('hidden');
-            profile.classList.add('hidden');
-
-            document.getElementById('navMain').className = "text-gray-400 flex flex-col items-center";
-            document.getElementById('navWallet').className = "text-gray-400 flex flex-col items-center";
-            document.getElementById('navProfile').className = "text-gray-400 flex flex-col items-center";
-
-            if(tab === 'main') {
-                main.classList.remove('hidden');
-                document.getElementById('navMain').className = "text-purple-400 flex flex-col items-center";
-            } else if(tab === 'wallet') {
-                wallet.classList.remove('hidden');
-                document.getElementById('navWallet').className = "text-purple-400 flex flex-col items-center";
-            } else if(tab === 'profile') {
-                profile.classList.remove('hidden');
-                document.getElementById('navProfile').className = "text-purple-400 flex flex-col items-center";
-            }
-        }
-
-        function walletSubTab(mode) {
-            const addB = document.getElementById('addBox');
-            const witB = document.getElementById('witBox');
-            const addBtn = document.getElementById('subAddBtn');
-            const witBtn = document.getElementById('subWitBtn');
-
-            if(mode === 'add') {
-                addB.classList.remove('hidden');
-                witB.classList.add('hidden');
-                addBtn.className = "bg-green-600 text-white px-3 py-1 rounded text-xs font-bold";
-                witBtn.className = "bg-gray-700 text-gray-300 px-3 py-1 rounded text-xs font-bold";
-            } else {
-                addB.classList.add('hidden');
-                witB.classList.remove('hidden');
-                witBtn.className = "bg-green-600 text-white px-3 py-1 rounded text-xs font-bold";
-                addBtn.className = "bg-gray-700 text-gray-300 px-3 py-1 rounded text-xs font-bold";
-            }
-        }
-
-        function processDeposit() {
-            const amt = Number(document.getElementById('addAmt').value);
-            const utr = document.getElementById('addUtr').value.trim();
-
-            if(!amt || !utr) {
-                alert("Kripya Amount aur UTR bharein!");
-                return;
-            }
-
-            userBal += amt;
-            localStorage.setItem('ld_bal', userBal);
-            updateWalletDisplay();
-
-            alert("₹" + amt + " successfully added!");
-            document.getElementById('addAmt').value = '';
-            document.getElementById('addUtr').value = '';
-        }
-
-        function processWithdraw() {
-            const amt = Number(document.getElementById('witAmt').value);
-            const upi = document.getElementById('witUpi').value.trim();
-
-            if(!amt || !upi) {
-                alert("Kripya details bharein!");
-                return;
-            }
-            if(amt < 100) {
-                alert("Minimum withdrawal ₹100 hai!");
-                return;
-            }
-            if(amt > userBal) {
-                alert("Insufficient Balance!");
-                return;
-            }
-
-            userBal -= amt;
-            localStorage.setItem('ld_bal', userBal);
-            updateWalletDisplay();
-
-            alert("Withdrawal requested successfully!");
-            document.getElementById('witAmt').value = '';
-            document.getElementById('witUpi').value = '';
-        }
-
-        function openModal() {
-            document.getElementById('challengeModal').classList.remove('hidden');
-        }
-        function closeModal() {
-            document.getEleme
+            l
