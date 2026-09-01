@@ -1,162 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LudoDhaba</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-[#0b061e] text-white font-sans antialiased pb-24">
+<!-- Firebase SDK & Functional Scripts -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    <!-- App Container to Prevent Left Alignment Issues -->
-    <div class="max-w-md mx-auto min-h-screen relative shadow-2xl bg-[#0b061e]">
+    // ⚠️ Yahan apni khud ki Firebase Project ki details daalein (Jo aapne Firebase Console se li thi)
+    const firebaseConfig = {
+        apiKey: "YOUR_FIREBASE_API_KEY",
+        authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+        projectId: "YOUR_FIREBASE_PROJECT_ID",
+        storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+        appId: "YOUR_FIREBASE_APP_ID"
+    };
 
-        <!-- Top Header / Balance Section -->
-        <div class="flex justify-between items-center p-4 bg-[#140b32] border-b border-purple-900/45 sticky top-0 z-50">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center font-bold text-sm">🎲</div>
-                <span class="font-bold tracking-wide text-lg text-yellow-400">LudoDhaba</span>
-            </div>
-            <div class="bg-[#1f124a] px-3 py-1 rounded-lg border border-purple-500/30 text-xs">
-                <p class="text-gray-400 text-[10px]">Wallet</p>
-                <p class="font-bold text-green-400">₹500</p>
-            </div>
-        </div>
+    // Initialize Firebase (Agar pehle se initialized nahi hai)
+    let app, auth;
+    try {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+    } catch(e) {
+        console.log("Firebase already initialized or config error");
+    }
 
-        <!-- Google Login Box -->
-        <div class="p-4">
-            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 text-center space-y-3 shadow-md">
-                <h3 class="font-bold text-sm text-white">Account Access</h3>
-                <p class="text-xs text-gray-400">Google Account se safe login karein!</p>
-                <button id="googleLoginBtn" class="w-full bg-white hover:bg-gray-100 text-gray-900 font-bold py-2.5 px-4 rounded-lg text-xs flex items-center justify-center space-x-2 shadow transition">
-                    <i class="fa-brands fa-google text-red-500 text-base"></i>
-                    <span>Sign in with Google</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Main Banner Buttons -->
-        <div class="px-4 space-y-3">
-            <button class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2">
-                <span>🚀 Room Code Share Karein & Jeetein!</span>
-            </button>
-            <button class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg">
-                + Create Challenge
-            </button>
-        </div>
-
-        <!-- Active Battles Section -->
-        <div class="p-4 space-y-3">
-            <h3 class="font-bold text-sm text-gray-200">Active Battles</h3>
-            <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow-md">
-                <div>
-                    <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Sameem Khan</span></p>
-                    <p class="text-xs text-gray-300 mt-0.5">Room: <span class="text-yellow-400 font-bold">LUDO7245</span></p>
-                    <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹100</p>
-                </div>
-                <button class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow">Join</button>
-            </div>
-        </div>
-
-        <!-- Wallet & Deposit / Withdrawal Section -->
-        <div class="p-4 space-y-4">
-            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 shadow-lg">
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-bold text-sm text-yellow-400"><i class="fa-solid fa-wallet"></i> My Wallet</h3>
-                    <div class="space-x-1">
-                        <button onclick="toggleTab('deposit')" class="bg-green-600 text-white px-2.5 py-1 rounded text-[11px] font-bold">Add Money</button>
-                        <button onclick="toggleTab('withdraw')" class="bg-red-600 text-white px-2.5 py-1 rounded text-[11px] font-bold">Withdraw</button>
-                    </div>
-                </div>
-
-                <!-- Deposit Box -->
-                <div id="depositTab" class="space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20">
-                    <h4 class="font-bold text-xs text-white">Add Money via QR / UPI</h4>
-                    <p class="text-[11px] text-gray-300">Scan QR or pay to UPI: <span class="text-yellow-400 font-bold">yourname@upi</span></p>
-                    <div class="w-28 h-28 mx-auto bg-white p-1 rounded flex items-center justify-center text-black text-xs font-bold shadow">
-                        [ QR Code ]
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-gray-400">Enter Amount</label>
-                        <input type="number" id="depositAmount" placeholder="e.g. 500" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-gray-400">12-Digit UTR / Transaction ID</label>
-                        <input type="text" id="utrNumber" placeholder="e.g. 3352xxxxxxxx" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
-                    </div>
-                    <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow">Submit Deposit Request</button>
-                </div>
-
-                <!-- Withdrawal Box -->
-                <div id="withdrawTab" class="hidden space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20 mt-3">
-                    <h4 class="font-bold text-xs text-white">Withdraw Money to UPI / Bank</h4>
-                    <div>
-                        <label class="text-[10px] text-gray-400">Withdrawal Amount (Min ₹100)</label>
-                        <input type="number" id="withdrawAmount" placeholder="Enter Amount" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-gray-400">Enter UPI ID (PhonePe/GooglePay)</label>
-                        <input type="text" id="userUpi" placeholder="username@oksbi" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
-                    </div>
-                    <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow">Request Withdrawal</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation Bar -->
-        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 px-2 z-50 text-xs">
-            <a href="#" class="flex flex-col items-center text-purple-400">
-                <i class="fa-solid fa-gamepad text-base"></i>
-                <span class="text-[10px]">Play</span>
-            </a>
-            <a href="#" class="flex flex-col items-center text-gray-400 hover:text-white">
-                <i class="fa-solid fa-wallet text-base"></i>
-                <span class="text-[10px]">Wallet</span>
-            </a>
-            <a href="#" class="flex flex-col items-center text-gray-400 hover:text-white">
-                <i class="fa-solid fa-user text-base"></i>
-                <span class="text-[10px]">Profile</span>
-            </a>
-        </div>
-
-    </div>
-
-    <!-- Script Logic -->
-    <script>
-        function toggleTab(tab) {
-            const depositTab = document.getElementById('depositTab');
-            const withdrawTab = document.getElementById('withdrawTab');
-            if(tab === 'deposit') {
-                depositTab.classList.remove('hidden');
-                withdrawTab.classList.add('hidden');
-            } else {
-                depositTab.classList.add('hidden');
-                withdrawTab.classList.remove('hidden');
+    const googleBtn = document.getElementById('googleLoginBtn');
+    if(googleBtn && auth) {
+        const provider = new GoogleAuthProvider();
+        googleBtn.addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                alert("Login Successful! Welcome " + result.user.displayName);
+                // Yahan aap user ka naam screen par dikha sakte hain
+            } catch (error) {
+                alert("Google Login Error: " + error.message);
             }
-        }
+        });
+    }
+</script>
 
-        function submitDeposit() {
-            const amount = document.getElementById('depositAmount').value;
-            const utr = document.getElementById('utrNumber').value;
-            if(!amount || !utr) {
-                alert('Please fill all fields!');
-                return;
-            }
-            alert('Deposit request submitted successfully!');
+<script>
+    // Tab switching for Add Money and Withdraw
+    function toggleTab(tab) {
+        const depositTab = document.getElementById('depositTab');
+        const withdrawTab = document.getElementById('withdrawTab');
+        if(!depositTab || !withdrawTab) return;
+        
+        if(tab === 'deposit') {
+            depositTab.classList.remove('hidden');
+            withdrawTab.classList.add('hidden');
+        } else {
+            depositTab.classList.add('hidden');
+            withdrawTab.classList.remove('hidden');
         }
+    }
 
-        function submitWithdrawal() {
-            const amount = document.getElementById('withdrawAmount').value;
-            const upi = document.getElementById('userUpi').value;
-            if(!amount || !upi) {
-                alert('Please fill all fields!');
-                return;
-            }
-            alert('Withdrawal request submitted successfully!');
+    // Submit Deposit Function
+    function submitDeposit() {
+        const amount = document.getElementById('depositAmount').value;
+        const utr = document.getElementById('utrNumber').value;
+        if(!amount || !utr) {
+            alert('Kripya Amount aur UTR Number dono bharein!');
+            return;
         }
-    </script>
-</body>
-</html>
+        alert('Deposit request bhej di gayi hai! Verification ke baad balance update ho jayega.');
+    }
+
+    // Submit Withdrawal Function
+    function submitWithdrawal() {
+        const amount = document.getElementById('withdrawAmount').value;
+        const upi = document.getElementById('userUpi').value;
+        if(!amount || !upi) {
+            alert('Kripya Amount aur UPI ID dono bharein!');
+            return;
+        }
+        alert('Withdrawal request safalpurvak jama ho gayi hai!');
+    }
+</script>
+
 
 
