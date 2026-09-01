@@ -27,39 +27,27 @@
         </div>
 
         <!-- ================= 1. AUTHENTICATION SECTION ================= -->
-        <div id="authSection" class="p-6 space-y-6 mt-6">
+        <div id="authSection" class="p-6 space-y-6 mt-4">
             <div class="text-center space-y-2">
                 <div class="w-16 h-16 bg-gradient-to-tr from-orange-500 to-yellow-400 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg shadow-orange-500/30">
                     🎲
                 </div>
                 <h1 class="text-xl font-bold text-white">Welcome to LudoDhaba</h1>
-                <p class="text-xs text-gray-400">Khelein, Jeetein aur Instant Withdrawal Paayein!</p>
+                <p class="text-xs text-gray-400">Pehle Register karein aur Jeetna Shuru Karein!</p>
             </div>
 
             <div class="bg-[#140b32] p-5 rounded-2xl border border-purple-900/60 shadow-xl space-y-4">
+                <!-- Tabs -->
                 <div class="flex border-b border-purple-950 pb-2 mb-2">
-                    <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer">Login</button>
-                    <button type="button" id="tabRegisterBtn" onclick="switchAuthTab('register')" class="w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer">Register</button>
+                    <button type="button" onclick="switchTabMode('register')" id="btnRegisterTab" class="w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer">Register</button>
+                    <button type="button" onclick="switchTabMode('login')" id="btnLoginTab" class="w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer">Login</button>
                 </div>
 
-                <!-- Login Form -->
-                <div id="loginForm" class="space-y-3">
-                    <div>
-                        <label class="text-[10px] text-gray-400">Email Address</label>
-                        <input type="email" id="loginEmail" placeholder="name@example.com" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-gray-400">Password</label>
-                        <input type="password" id="loginPassword" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
-                    </div>
-                    <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-950 font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2 cursor-pointer">Login to Account</button>
-                </div>
-
-                <!-- Register Form -->
-                <div id="registerForm" class="space-y-3 hidden">
+                <!-- Register Form (Default Visible) -->
+                <div id="registerFormBox" class="space-y-3">
                     <div>
                         <label class="text-[10px] text-gray-400">Full Name</label>
-                        <input type="text" id="regName" placeholder="Sameem Khan" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
+                        <input type="text" id="regName" placeholder="Aapka Naam" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
                     </div>
                     <div>
                         <label class="text-[10px] text-gray-400">Email Address</label>
@@ -69,7 +57,20 @@
                         <label class="text-[10px] text-gray-400">Password</label>
                         <input type="password" id="regPassword" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
                     </div>
-                    <button onclick="handleRegister()" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2 cursor-pointer">Create Account</button>
+                    <button type="button" onclick="handleRegister()" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2 cursor-pointer">Create Account & Register</button>
+                </div>
+
+                <!-- Login Form (Hidden by Default) -->
+                <div id="loginFormBox" class="space-y-3 hidden">
+                    <div>
+                        <label class="text-[10px] text-gray-400">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="name@example.com" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-gray-400">Password</label>
+                        <input type="password" id="loginPassword" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
+                    </div>
+                    <button type="button" onclick="handleLogin()" class="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-950 font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2 cursor-pointer">Login to Account</button>
                 </div>
             </div>
         </div>
@@ -77,7 +78,7 @@
         <!-- ================= 2. MAIN APP DASHBOARD ================= -->
         <div id="mainDashboard" class="hidden">
 
-            <!-- TAB 1: PLAY SECTION -->
+            <!-- PLAY SECTION -->
             <div id="playSection" class="space-y-4 pb-4 p-4">
                 <div class="bg-gradient-to-r from-purple-900/60 to-indigo-900/60 p-4 rounded-2xl border border-purple-500/30 flex justify-between items-center shadow-lg">
                     <div>
@@ -90,7 +91,7 @@
                 </div>
 
                 <div class="space-y-2.5">
-                    <button onclick="openCreateBattleModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
+                    <button type="button" onclick="openCreateBattleModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
                         <i class="fa-solid fa-plus-circle text-sm"></i>
                         <span>Create Ludo Challenge</span>
                     </button>
@@ -101,17 +102,17 @@
                     <div id="battlesList" class="space-y-3">
                         <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow-md">
                             <div>
-                                <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Sameem Khan</span></p>
-                                <p class="text-xs text-gray-300 mt-0.5">Room Code: <span class="text-yellow-400 font-bold">LUDO9988</span></p>
-                                <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹100 | Win: ₹190</p>
+                                <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Admin</span></p>
+                                <p class="text-xs text-gray-300 mt-0.5">Room Code: <span class="text-yellow-400 font-bold">LUDO5544</span></p>
+                                <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹50 | Win: ₹95</p>
                             </div>
-                            <button onclick="alert('Battle Joined Successfully!')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow cursor-pointer">Join</button>
+                            <button type="button" onclick="alert('Battle Joined!')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow cursor-pointer">Join</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 2: WALLET SECTION -->
+            <!-- WALLET SECTION -->
             <div id="walletSection" class="hidden p-4 space-y-4">
                 <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 shadow-lg space-y-4">
                     <div class="flex justify-between items-center border-b border-purple-950 pb-3">
@@ -120,27 +121,27 @@
                             <h2 class="text-xl font-bold text-green-400" id="walletDisplayBalance">₹0</h2>
                         </div>
                         <div class="space-x-1">
-                            <button onclick="toggleWalletTab('deposit')" id="depTabBtn" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold shadow cursor-pointer">Add Money</button>
-                            <button onclick="toggleWalletTab('withdraw')" id="witTabBtn" class="bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-[11px] font-bold shadow cursor-pointer">Withdraw</button>
+                            <button type="button" onclick="toggleWalletTab('deposit')" id="depTabBtn" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold shadow cursor-pointer">Add Money</button>
+                            <button type="button" onclick="toggleWalletTab('withdraw')" id="witTabBtn" class="bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-[11px] font-bold shadow cursor-pointer">Withdraw</button>
                         </div>
                     </div>
 
                     <!-- Deposit Tab -->
                     <div id="depositTab" class="space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20">
                         <h4 class="font-bold text-xs text-white">Add Money via UPI QR</h4>
-                        <p class="text-[11px] text-gray-300">Pay to UPI: <span class="text-yellow-400 font-bold">sameem@upi</span></p>
+                        <p class="text-[11px] text-gray-300">Pay to UPI: <span class="text-yellow-400 font-bold">ludodhaba@upi</span></p>
                         <div class="w-28 h-28 mx-auto bg-white p-1 rounded-lg flex items-center justify-center text-black text-xs font-bold shadow">
                             [ QR CODE ]
                         </div>
                         <div>
                             <label class="text-[10px] text-gray-400">Amount (₹)</label>
-                            <input type="number" id="depositAmount" placeholder="e.g. 500" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
+                            <input type="number" id="depositAmount" placeholder="e.g. 100" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                         </div>
                         <div>
                             <label class="text-[10px] text-gray-400">12-Digit UTR / Transaction ID</label>
                             <input type="text" id="utrNumber" placeholder="e.g. 3352xxxxxxxx" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                         </div>
-                        <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Submit Deposit Request</button>
+                        <button type="button" onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Submit Deposit</button>
                     </div>
 
                     <!-- Withdrawal Tab -->
@@ -151,15 +152,15 @@
                             <input type="number" id="withdrawAmount" placeholder="Enter Amount" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                         </div>
                         <div>
-                            <label class="text-[10px] text-gray-400">UPI ID (GooglePay / PhonePe / Paytm)</label>
+                            <label class="text-[10px] text-gray-400">UPI ID</label>
                             <input type="text" id="userUpi" placeholder="username@oksbi" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                         </div>
-                        <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Request Withdrawal</button>
+                        <button type="button" onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Request Withdrawal</button>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 3: PROFILE SECTION -->
+            <!-- PROFILE SECTION -->
             <div id="profileSection" class="hidden p-4 space-y-4">
                 <div class="bg-[#140b32] p-5 rounded-xl border border-purple-900/50 shadow-lg text-center space-y-3">
                     <div class="w-16 h-16 bg-gradient-to-tr from-purple-600 to-indigo-600 mx-auto rounded-full flex items-center justify-center text-2xl font-bold shadow-lg" id="profileInitial">U</div>
@@ -167,26 +168,21 @@
                         <h3 id="profileName" class="font-bold text-sm text-white">User Name</h3>
                         <p id="profileEmail" class="text-xs text-gray-400">email@example.com</p>
                     </div>
-                    <div class="bg-[#1f124a] p-3 rounded-lg text-left space-y-2 text-xs border border-purple-500/20">
-                        <p class="text-gray-300">KYC Status: <span class="float-right text-green-400 font-bold"><i class="fa-solid fa-check-circle"></i> Verified</span></p>
-                        <p class="text-gray-300">Total Games Played: <span class="float-right text-yellow-400 font-bold">0</span></p>
-                        <p class="text-gray-300">Total Winnings: <span class="float-right text-green-400 font-bold">₹0</span></p>
-                    </div>
-                    <button onclick="handleLogout()" class="w-full bg-red-600/80 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Logout Account</button>
+                    <button type="button" onclick="handleLogout()" class="w-full bg-red-600/80 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Logout Account</button>
                 </div>
             </div>
 
-            <!-- BOTTOM NAVIGATION BAR -->
+            <!-- BOTTOM NAVIGATION -->
             <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 px-2 z-50 text-xs shadow-lg">
-                <button onclick="switchTab('play')" id="navPlay" class="flex flex-col items-center text-purple-400 focus:outline-none cursor-pointer">
+                <button type="button" onclick="switchTab('play')" id="navPlay" class="flex flex-col items-center text-purple-400 focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-gamepad text-base"></i>
                     <span class="text-[10px]">Play</span>
                 </button>
-                <button onclick="switchTab('wallet')" id="navWallet" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none cursor-pointer">
+                <button type="button" onclick="switchTab('wallet')" id="navWallet" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-wallet text-base"></i>
                     <span class="text-[10px]">Wallet</span>
                 </button>
-                <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none cursor-pointer">
+                <button type="button" onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-user text-base"></i>
                     <span class="text-[10px]">Profile</span>
                 </button>
@@ -203,11 +199,11 @@
                 </div>
                 <div>
                     <label class="text-[10px] text-gray-400">Ludo Room Code</label>
-                    <input type="text" id="battleRoomCode" placeholder="e.g. 12345678" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5">
+                    <input type="text" id="battleRoomCode" placeholder="e.g. 123456" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5">
                 </div>
                 <div class="flex space-x-2 pt-2">
-                    <button onclick="publishBattle()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Publish</button>
-                    <button onclick="closeCreateBattleModal()" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Cancel</button>
+                    <button type="button" onclick="publishBattle()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Publish</button>
+                    <button type="button" onclick="closeCreateBattleModal()" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Cancel</button>
                 </div>
             </div>
         </div>
@@ -227,33 +223,33 @@
             }
         }
 
-        // Fixed Switch Auth Tab Functionality
-        function switchAuthTab(type) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const tabLoginBtn = document.getElementById('tabLoginBtn');
-            const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+        // Switch between Register and Login Tabs inside Auth
+        function switchTabMode(mode) {
+            const regBox = document.getElementById('registerFormBox');
+            const logBox = document.getElementById('loginFormBox');
+            const btnReg = document.getElementById('btnRegisterTab');
+            const btnLog = document.getElementById('btnLoginTab');
 
-            if(type === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                tabLoginBtn.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer";
-                tabRegisterBtn.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer";
+            if(mode === 'register') {
+                regBox.classList.remove('hidden');
+                logBox.classList.add('hidden');
+                btnReg.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer";
+                btnLog.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer";
             } else {
-                loginForm.classList.add('hidden');
-                registerForm.classList.remove('hidden');
-                tabRegisterBtn.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer";
-                tabLoginBtn.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer";
+                regBox.classList.add('hidden');
+                logBox.classList.remove('hidden');
+                btnLog.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer";
+                btnReg.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer";
             }
         }
 
         function handleRegister() {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPassword').value;
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPassword').value.trim();
 
             if(!name || !email || !pass) {
-                alert("Kripya sabhi fields bharein!");
+                alert("Kripya sabhi fields (Name, Email, Password) bharein!");
                 return;
             }
 
@@ -262,13 +258,13 @@
             localStorage.setItem('ludo_balance', 0);
             userBalance = 0;
 
-            alert("Registration successful!");
+            alert("Registration Successful!");
             showDashboard();
         }
 
         function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPassword').value;
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
 
             if(!email || !pass) {
                 alert("Kripya Email aur Password daalein!");
@@ -278,6 +274,7 @@
             currentUser = { name: email.split('@')[0], email: email };
             localStorage.setItem('ludo_user', JSON.stringify(currentUser));
             
+            alert("Login Successful!");
             showDashboard();
         }
 
@@ -304,6 +301,7 @@
             document.getElementById('authSection').classList.remove('hidden');
             document.getElementById('mainDashboard').classList.add('hidden');
             document.getElementById('headerWalletBox').classList.add('hidden');
+            switchTabMode('register'); // Default register khulega
         }
 
         function updateWalletUI() {
@@ -312,4 +310,9 @@
         }
 
         function switchTab(tab) {
-            const playSec = document.getElem
+            const playSec = document.getElementById('playSection');
+            const walletSec = document.getElementById('walletSection');
+            const profileSec = document.getElementById('profileSection');
+
+            const navPlay = document.getElementById('navPlay');
+            const navWallet 
