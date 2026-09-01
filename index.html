@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LudoDhaba</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-[#0b061e] text-white font-sans antialiased pb-24">
@@ -14,7 +12,7 @@
     <!-- App Container -->
     <div class="max-w-md mx-auto min-h-screen relative shadow-2xl bg-[#0b061e]">
 
-        <!-- Top Header / Balance Section -->
+        <!-- Top Header -->
         <div class="flex justify-between items-center p-4 bg-[#140b32] border-b border-purple-950 sticky top-0 z-50 shadow">
             <div class="flex items-center space-x-2">
                 <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center font-bold text-sm shadow">🎲</div>
@@ -26,53 +24,61 @@
             </div>
         </div>
 
-        <!-- Google Login Box -->
-        <div class="p-4" id="loginBoxContainer">
-            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 text-center space-y-3 shadow-md">
-                <h3 class="font-bold text-sm text-white">Account Access</h3>
-                <p class="text-xs text-gray-400">Google Account se safe login karein!</p>
-                <button id="googleLoginBtn" class="w-full bg-white hover:bg-gray-100 text-gray-900 font-bold py-2.5 px-4 rounded-lg text-xs flex items-center justify-center space-x-2 shadow transition">
-                    <i class="fa-brands fa-google text-red-500 text-base"></i>
-                    <span>Sign in with Google</span>
+        <!-- SECTIONS CONTAINER -->
+
+        <!-- 1. PLAY / HOME SECTION -->
+        <div id="playSection" class="space-y-4 pb-4">
+            <!-- Google Login Box -->
+            <div class="p-4" id="loginBoxContainer">
+                <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 text-center space-y-3 shadow-md">
+                    <h3 class="font-bold text-sm text-white">Account Access</h3>
+                    <p class="text-xs text-gray-400">Google Account se safe login karein!</p>
+                    <button id="googleLoginBtn" class="w-full bg-white hover:bg-gray-100 text-gray-900 font-bold py-2.5 px-4 rounded-lg text-xs flex items-center justify-center space-x-2 shadow transition">
+                        <i class="fa-brands fa-google text-red-500 text-base"></i>
+                        <span>Sign in with Google</span>
+                    </button>
+                    <div id="userProfileDisplay" class="hidden text-xs text-green-400 font-semibold space-y-1">
+                        <p id="welcomeUserText"></p>
+                        <button id="googleLogoutBtn" class="text-[10px] bg-red-600 text-white px-2 py-1 rounded">Logout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Banner Buttons -->
+            <div class="px-4 space-y-3">
+                <button onclick="openRoomModal()" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2">
+                    <span>🚀 Room Code Share Karein & Jeetein!</span>
                 </button>
-                <div id="userProfileDisplay" class="hidden text-xs text-green-400 font-semibold space-y-1">
-                    <p id="welcomeUserText"></p>
-                    <button id="googleLogoutBtn" class="text-[10px] bg-red-600 text-white px-2 py-1 rounded">Logout</button>
+                <button onclick="openCreateBattleModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg">
+                    + Create Challenge
+                </button>
+            </div>
+
+            <!-- Active Battles Section -->
+            <div class="p-4 space-y-3">
+                <h3 class="font-bold text-sm text-gray-200">Active Battles</h3>
+                <div id="battlesList" class="space-y-3">
+                    <!-- Dynamic Battles will load here -->
+                    <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow-md">
+                        <div>
+                            <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Sameem Khan</span></p>
+                            <p class="text-xs text-gray-300 mt-0.5">Room: <span class="text-yellow-400 font-bold">LUDO7245</span></p>
+                            <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹100</p>
+                        </div>
+                        <button onclick="alert('Battle Joined!')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow">Join</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Banner Buttons -->
-        <div class="px-4 space-y-3">
-            <button class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2">
-                <span>🚀 Room Code Share Karein & Jeetein!</span>
-            </button>
-            <button class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg">
-                + Create Challenge
-            </button>
-        </div>
-
-        <!-- Active Battles Section -->
-        <div class="p-4 space-y-3">
-            <h3 class="font-bold text-sm text-gray-200">Active Battles</h3>
-            <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow-md">
-                <div>
-                    <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Sameem Khan</span></p>
-                    <p class="text-xs text-gray-300 mt-0.5">Room: <span class="text-yellow-400 font-bold">LUDO7245</span></p>
-                    <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹100</p>
-                </div>
-                <button class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow">Join</button>
-            </div>
-        </div>
-
-        <!-- Wallet & Deposit / Withdrawal Section -->
-        <div class="p-4 space-y-4">
+        <!-- 2. WALLET SECTION (Hidden by default) -->
+        <div id="walletSection" class="hidden p-4 space-y-4">
             <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 shadow-lg">
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="font-bold text-sm text-yellow-400"><i class="fa-solid fa-wallet"></i> My Wallet</h3>
                     <div class="space-x-1">
-                        <button onclick="toggleTab('deposit')" class="bg-green-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Add Money</button>
-                        <button onclick="toggleTab('withdraw')" class="bg-red-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Withdraw</button>
+                        <button onclick="toggleWalletTab('deposit')" class="bg-green-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Add Money</button>
+                        <button onclick="toggleWalletTab('withdraw')" class="bg-red-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Withdraw</button>
                     </div>
                 </div>
 
@@ -110,29 +116,61 @@
             </div>
         </div>
 
+        <!-- 3. PROFILE SECTION (Hidden by default) -->
+        <div id="profileSection" class="hidden p-4 space-y-4">
+            <div class="bg-[#140b32] p-4 rounded-xl border border-purple-900/50 shadow-lg text-center space-y-3">
+                <div class="w-16 h-16 bg-purple-600 mx-auto rounded-full flex items-center justify-center text-2xl font-bold" id="profileInitial">U</div>
+                <h3 id="profileName" class="font-bold text-sm text-white">Guest User</h3>
+                <p id="profileEmail" class="text-xs text-gray-400">Please login to view details</p>
+                <div class="bg-[#1f124a] p-3 rounded-lg text-left space-y-1 text-xs">
+                    <p class="text-gray-300">Total Games Played: <span class="float-right text-yellow-400 font-bold">0</span></p>
+                    <p class="text-gray-300">Total Won: <span class="float-right text-green-400 font-bold">₹0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL FOR CREATING BATTLE / ROOM CODE -->
+        <div id="battleModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+            <div class="bg-[#140b32] border border-purple-900 p-4 rounded-xl w-full max-w-xs space-y-3 shadow-2xl">
+                <h3 class="font-bold text-sm text-yellow-400">Create Ludo Challenge</h3>
+                <div>
+                    <label class="text-[10px] text-gray-400">Entry Amount (₹)</label>
+                    <input type="number" id="battleAmount" placeholder="e.g. 100" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5">
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-400">Ludo Room Code</label>
+                    <input type="text" id="battleRoomCode" placeholder="e.g. 12345678" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5">
+                </div>
+                <div class="flex space-x-2 pt-2">
+                    <button onclick="createBattle()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg text-xs">Publish</button>
+                    <button onclick="closeCreateBattleModal()" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 rounded-lg text-xs">Cancel</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Bottom Navigation Bar -->
         <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 px-2 z-50 text-xs shadow-lg">
-            <a href="#" class="flex flex-col items-center text-purple-400">
+            <button onclick="switchTab('play')" id="navPlay" class="flex flex-col items-center text-purple-400 focus:outline-none">
                 <i class="fa-solid fa-gamepad text-base"></i>
                 <span class="text-[10px]">Play</span>
-            </a>
-            <a href="#" class="flex flex-col items-center text-gray-400 hover:text-white">
+            </button>
+            <button onclick="switchTab('wallet')" id="navWallet" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none">
                 <i class="fa-solid fa-wallet text-base"></i>
                 <span class="text-[10px]">Wallet</span>
-            </a>
-            <a href="#" class="flex flex-col items-center text-gray-400 hover:text-white">
+            </button>
+            <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none">
                 <i class="fa-solid fa-user text-base"></i>
                 <span class="text-[10px]">Profile</span>
-            </a>
+            </button>
         </div>
 
     </div>
 
-    <!-- Firebase & App Logic -->
+    <!-- Firebase & Main Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
@@ -176,11 +214,45 @@
                 document.getElementById('googleLoginBtn').classList.add('hidden');
                 document.getElementById('userProfileDisplay').classList.remove('hidden');
                 document.getElementById('welcomeUserText').textContent = "Hi, " + user.displayName;
+                
+                // Update Profile Tab Details
+                document.getElementById('profileName').textContent = user.displayName;
+                document.getElementById('profileEmail').textContent = user.email;
+                document.getElementById('profileInitial').textContent = user.displayName.charAt(0).toUpperCase();
             } else {
                 document.getElementById('googleLoginBtn').classList.remove('hidden');
                 document.getElementById('userProfileDisplay').classList.add('hidden');
+                document.getElementById('profileName').textContent = "Guest User";
+                document.getElementById('profileEmail').textContent = "Please login to view details";
+                document.getElementById('profileInitial').textContent = "U";
             }
         });
+
+        // Create Battle Functionality
+        window.createBattle = async function() {
+            const amount = document.getElementById('battleAmount').value;
+            const roomCode = document.getElementById('battleRoomCode').value;
+
+            if(!amount || !roomCode) {
+                alert("Kripya Amount aur Room Code bharein!");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "battles"), {
+                    creator: currentUser ? currentUser.displayName : "Guest User",
+                    amount: Number(amount),
+                    roomCode: roomCode,
+                    status: "Active",
+                    timestamp: new Date()
+                });
+                alert("Challenge Successfully Created!");
+                closeCreateBattleModal();
+                loadBattles();
+            } catch(e) {
+                alert("Error: " + e.message);
+            }
+        }
 
         // Submit Deposit
         document.getElementById('submitDepBtn').addEventListener('click', async () => {
@@ -241,9 +313,41 @@
         });
     </script>
 
-    <!-- UI Script -->
+    <!-- UI Interaction Scripts -->
     <script>
-        function toggleTab(tab) {
+        // Switch Bottom Navigation Tabs
+        function switchTab(tab) {
+            const playSec = document.getElementById('playSection');
+            const walletSec = document.getElementById('walletSection');
+            const profileSec = document.getElementById('profileSection');
+
+            const navPlay = document.getElementById('navPlay');
+            const navWallet = document.getElementById('navWallet');
+            const navProfile = document.getElementById('navProfile');
+
+            // Reset classes
+            playSec.classList.add('hidden');
+            walletSec.classList.add('hidden');
+            profileSec.classList.add('hidden');
+
+            navPlay.className = "flex flex-col items-center text-gray-400 hover:text-white focus:outline-none";
+            navWallet.className = "flex flex-col items-center text-gray-400 hover:text-white focus:outline-none";
+            navProfile.className = "flex flex-col items-center text-gray-400 hover:text-white focus:outline-none";
+
+            if(tab === 'play') {
+                playSec.classList.remove('hidden');
+                navPlay.className = "flex flex-col items-center text-purple-400 focus:outline-none";
+            } else if(tab === 'wallet') {
+                walletSec.classList.remove('hidden');
+                navWallet.className = "flex flex-col items-center text-purple-400 focus:outline-none";
+            } else if(tab === 'profile') {
+                profileSec.classList.remove('hidden');
+                navProfile.className = "flex flex-col items-center text-purple-400 focus:outline-none";
+            }
+        }
+
+        // Wallet Tab Sub-tabs (Add Money / Withdraw)
+        function toggleWalletTab(tab) {
             const depositTab = document.getElementById('depositTab');
             const withdrawTab = document.getElementById('withdrawTab');
             if(tab === 'deposit') {
@@ -254,7 +358,10 @@
                 withdrawTab.classList.remove('hidden');
             }
         }
-    </script>
-</body>
-</html>
+
+        // Modal Controls
+        function openCreateBattleModal() {
+            document.getElementById('battleModal').classList.remove('hidden');
+        }
+        function closeC
 
