@@ -1,1 +1,889 @@
-*{box-sizing:border-box}body{margin:0;background:#070b15;color:#f7f8ff;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.app{max-width:560px;margin:auto;min-height:100vh;padding-bottom:92px;background:linear-gradient(180deg,#0a1020,#070b15)}button{font:inherit;color:inherit;border:0;cursor:pointer}.topbar{height:68px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #20283a;position:sticky;top:0;background:#090e1bdf;backdrop-filter:blur(12px);z-index:5}.brand{font-weight:800;letter-spacing:.7px}.brand b{color:#ffca38}.crown{color:#ffca38;font-size:25px;margin-right:7px}.icon-btn{width:40px;height:40px;border-radius:12px;background:#151c2e}.hero{margin:18px;padding:25px;border-radius:24px;background:radial-gradient(circle at 90% 10%,#7a3fff55,transparent 35%),linear-gradient(135deg,#171f38,#10172a);border:1px solid #29334d;display:flex;justify-content:space-between;overflow:hidden}.eyebrow{font-size:11px;color:#8d9ab8;letter-spacing:2px;margin:0 0 8px}.hero h1{font-size:29px;line-height:1.12;margin:0}.hero h1 span{color:#ffca38}.muted{color:#9ba7c0;font-size:13px;line-height:1.5;max-width:330px}.dice{font-size:70px;align-self:center;filter:drop-shadow(0 12px 25px #0008)}.primary,.join{background:linear-gradient(135deg,#ffcf45,#ff9f1c);color:#111;font-weight:800;border-radius:12px;padding:12px 18px}.wallet-card{margin:0 18px 22px;padding:18px;border:1px solid #2a3550;border-radius:18px;background:#101729;display:flex;justify-content:space-between;align-items:center}.wallet-card small,.prize small{display:block;color:#8995b0;font-size:10px}.wallet-card strong{font-size:24px;display:block;margin-top:4px}.outline{padding:10px 15px;border:1px solid #485573;border-radius:10px;background:transparent}.section-head{padding:0 18px;margin:22px 0 12px;display:flex;justify-content:space-between;align-items:center}.section-head h2{font-size:17px;margin:0}.section-head button{background:none;color:#ffca38;font-size:12px}.grid{padding:0 18px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.tile{padding:14px 5px;background:#101729;border:1px solid #222d45;border-radius:15px;display:flex;flex-direction:column;align-items:center;gap:6px}.tile b{font-size:11px}.tile small{font-size:9px;color:#7f8aa4}.tournaments{padding:0 18px;display:grid;gap:10px}.tournament{background:#101729;border:1px solid #252f47;border-radius:16px;padding:15px;display:grid;grid-template-columns:1fr auto;gap:12px}.tournament h3{margin:7px 0 3px;font-size:15px}.tournament p{margin:0;color:#8995ad;font-size:11px}.tag{font-size:9px;background:#19b76b33;color:#4ee49a;border-radius:5px;padding:4px 7px}.tag.soon{color:#ffca38;background:#ffca3822}.prize{text-align:right;font-weight:800;color:#ffca38}.join{grid-column:1/-1;width:100%;padding:9px}.leaderboard{margin:0 18px}.leaderboard div{display:flex;align-items:center;gap:12px;padding:13px 14px;background:#101729;border-bottom:1px solid #202a40}.leaderboard div:first-child{border-radius:14px 14px 0 0}.leaderboard div:last-child{border-radius:0 0 14px 14px}.leaderboard strong{margin-left:auto;color:#ffca38}.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(560px,100%);height:76px;background:#0b1020f2;border-top:1px solid #252e43;display:flex;justify-content:space-around;align-items:center;z-index:10;backdrop-filter:blur(14px)}.bottom-nav button{background:none;color:#78839d;font-size:20px;display:flex;flex-direction:column;align-items:center;gap:4px}.bottom-nav small{font-size:9px}.bottom-nav .active{color:#ffca38}.bottom-nav .play{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#ffcf45,#ff9f1c);color:#111;margin-top:-27px;border:5px solid #0b1020}.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:flex-end;justify-content:center;z-index:20}.modal.hidden{display:none}.modal-box{width:min(560px,100%);background:#101729;border:1px solid #29344c;border-radius:24px 24px 0 0;padding:25px;min-height:230px;position:relative}.close{position:absolute;right:18px;top:14px;background:#202a40;border-radius:50%;width:34px;height:34px;font-size:24px}.modal-box h2{margin-top:0}.modal-box p{color:#9aa6bf}.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(20px);opacity:0;background:#f4f6ff;color:#111;padding:11px 17px;border-radius:12px;font-size:13px;transition:.25s;z-index:30}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:390px){.hero{padding:20px}.hero h1{font-size:25px}.dice{font-size:55px}.grid{grid-template-columns:repeat(2,1fr)}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
+<title>Ludo Badsah</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#070b16;
+  color:#fff;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  max-width:600px;
+  min-height:100vh;
+  margin:auto;
+  background:#0a1020;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+.header{
+  height:70px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#0b1121;
+  border-bottom:1px solid #202b43;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.logo span{
+  color:#ffc62e;
+}
+
+.crown{
+  color:#ffc62e;
+  font-size:28px;
+  margin-right:6px;
+}
+
+.bell{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:#151e33;
+  color:white;
+  font-size:19px;
+}
+
+/* HERO */
+.hero{
+  margin:18px;
+  padding:24px;
+  min-height:220px;
+  border-radius:24px;
+  background:
+  radial-gradient(circle at 90% 10%,#7b42ff55,transparent 35%),
+  linear-gradient(135deg,#18213b,#10172a);
+  border:1px solid #293650;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  overflow:hidden;
+}
+
+.small-title{
+  color:#8f9bb7;
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+
+.hero h1{
+  font-size:31px;
+  line-height:1.12;
+}
+
+.hero h1 span{
+  color:#ffc62e;
+}
+
+.hero p{
+  color:#9ba7c0;
+  font-size:13px;
+  line-height:1.5;
+  margin:12px 0 18px;
+}
+
+.dice{
+  font-size:72px;
+  transform:rotate(-8deg);
+}
+
+/* BUTTON */
+.play-btn{
+  background:linear-gradient(135deg,#ffd347,#ff9e18);
+  color:#111;
+  padding:13px 21px;
+  border-radius:12px;
+  font-weight:900;
+}
+
+/* WALLET */
+.wallet{
+  margin:0 18px 22px;
+  padding:18px;
+  border-radius:18px;
+  border:1px solid #2b3650;
+  background:#10182b;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.wallet small{
+  color:#8c98b2;
+  font-size:10px;
+}
+
+.balance{
+  display:block;
+  margin-top:4px;
+  font-size:25px;
+  font-weight:900;
+  color:#fff;
+}
+
+.wallet-btn{
+  padding:10px 16px;
+  border:1px solid #52617e;
+  border-radius:10px;
+  background:transparent;
+  color:#fff;
+}
+
+/* SECTION */
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:24px 18px 12px;
+}
+
+.section-title h2{
+  font-size:18px;
+}
+
+.view{
+  color:#ffc62e;
+  background:transparent;
+  font-size:12px;
+}
+
+/* MENU */
+.menu{
+  padding:0 18px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+}
+
+.menu-card{
+  min-height:105px;
+  padding:12px 5px;
+  border-radius:15px;
+  border:1px solid #253049;
+  background:#10182b;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+
+.menu-icon{
+  font-size:25px;
+}
+
+.menu-card b{
+  font-size:11px;
+}
+
+.menu-card small{
+  color:#7f8ca6;
+  font-size:9px;
+}
+
+/* TOURNAMENT */
+.tournaments{
+  padding:0 18px;
+}
+
+.tournament{
+  margin-bottom:11px;
+  padding:16px;
+  border-radius:17px;
+  background:#10182b;
+  border:1px solid #253049;
+}
+
+.tournament-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.live{
+  display:inline-block;
+  padding:4px 7px;
+  border-radius:5px;
+  color:#4ee39b;
+  background:#1ab66b22;
+  font-size:9px;
+  font-weight:bold;
+}
+
+.upcoming{
+  color:#ffc62e;
+  background:#ffc62e20;
+}
+
+.tournament h3{
+  font-size:16px;
+  margin:8px 0 4px;
+}
+
+.tournament p{
+  color:#8995ad;
+  font-size:11px;
+}
+
+.prize{
+  text-align:right;
+  color:#ffc62e;
+  font-size:19px;
+  font-weight:900;
+}
+
+.prize small{
+  display:block;
+  color:#7e8aa4;
+  font-size:9px;
+  font-weight:normal;
+  margin-top:3px;
+}
+
+.join{
+  width:100%;
+  margin-top:13px;
+  padding:10px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#ffd347,#ff9e18);
+  color:#111;
+  font-weight:900;
+}
+
+/* LEADERBOARD */
+.leaderboard{
+  margin:0 18px;
+  border-radius:15px;
+  overflow:hidden;
+  border:1px solid #253049;
+}
+
+.player{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  background:#10182b;
+  border-bottom:1px solid #202b42;
+}
+
+.player:last-child{
+  border-bottom:0;
+}
+
+.player strong{
+  margin-left:auto;
+  color:#ffc62e;
+}
+
+.rank{
+  font-size:21px;
+}
+
+/* BOTTOM NAV */
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(600px,100%);
+  height:76px;
+  background:#0b1121f5;
+  border-top:1px solid #253049;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  backdrop-filter:blur(15px);
+  z-index:20;
+}
+
+.nav-btn{
+  background:transparent;
+  color:#7d89a2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  font-size:20px;
+}
+
+.nav-btn small{
+  font-size:9px;
+}
+
+.nav-btn.active{
+  color:#ffc62e;
+}
+
+.center-play{
+  width:59px;
+  height:59px;
+  margin-top:-28px;
+  border-radius:50%;
+  border:5px solid #0b1121;
+  background:linear-gradient(135deg,#ffd347,#ff9e18);
+  font-size:24px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:50;
+}
+
+.modal.hide{
+  display:none;
+}
+
+.modal-box{
+  width:min(600px,100%);
+  min-height:250px;
+  padding:25px;
+  background:#10182b;
+  border:1px solid #2c3853;
+  border-radius:24px 24px 0 0;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  right:17px;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:#202b42;
+  color:#fff;
+  font-size:24px;
+}
+
+.modal-box h2{
+  margin-bottom:20px;
+}
+
+.modal-box p{
+  color:#a2adc3;
+  padding:10px 0;
+  border-bottom:1px solid #222d44;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  background:#fff;
+  color:#111;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:13px;
+  z-index:100;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* MOBILE */
+@media(max-width:390px){
+
+  .hero{
+    padding:20px;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+
+  .dice{
+    font-size:55px;
+  }
+
+  .menu{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+<header class="header">
+
+  <div class="logo">
+    <span class="crown">♛</span>
+    LUDO <span>BADSAH</span>
+  </div>
+
+  <button class="bell" onclick="notify()">🔔</button>
+
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+
+  <div>
+
+    <div class="small-title">WELCOME TO LUDO BADSAH</div>
+
+    <h1>
+      Play.<br>
+      Compete.<br>
+      <span>Become Badsah.</span>
+    </h1>
+
+    <p>
+      Join exciting Ludo matches and climb the leaderboard.
+    </p>
+
+    <button class="play-btn" onclick="playNow()">
+      PLAY NOW
+    </button>
+
+  </div>
+
+  <div class="dice">
+    🎲
+  </div>
+
+</section>
+
+
+<!-- WALLET -->
+<section class="wallet">
+
+  <div>
+    <small>VIRTUAL BALANCE</small>
+    <strong class="balance">₹ 1,250</strong>
+  </div>
+
+  <button class="wallet-btn" onclick="openModal('wallet')">
+    Wallet
+  </button>
+
+</section>
+
+
+<!-- QUICK MENU -->
+<div class="section-title">
+  <h2>Quick Menu</h2>
+</div>
+
+<section class="menu">
+
+  <button class="menu-card" onclick="openModal('profile')">
+    <span class="menu-icon">👤</span>
+    <b>Profile</b>
+    <small>Account</small>
+  </button>
+
+  <button class="menu-card" onclick="openModal('tournaments')">
+    <span class="menu-icon">🏆</span>
+    <b>Tournaments</b>
+    <small>Compete</small>
+  </button>
+
+  <button class="menu-card" onclick="openModal('history')">
+    <span class="menu-icon">📜</span>
+    <b>History</b>
+    <small>Records</small>
+  </button>
+
+  <button class="menu-card" onclick="openModal('refer')">
+    <span class="menu-icon">🎁</span>
+    <b>Refer & Earn</b>
+    <small>Invite</small>
+  </button>
+
+</section>
+
+
+<!-- TOURNAMENTS -->
+<div class="section-title">
+
+  <h2>Live Tournaments</h2>
+
+  <button class="view" onclick="openModal('tournaments')">
+    View all
+  </button>
+
+</div>
+
+
+<section class="tournaments">
+
+  <article class="tournament">
+
+    <div class="tournament-top">
+
+      <div>
+
+        <span class="live">● LIVE</span>
+
+        <h3>Royal Battle</h3>
+
+        <p>4 Players • Classic Ludo</p>
+
+      </div>
+
+      <div class="prize">
+        ₹500
+        <small>Prize Pool</small>
+      </div>
+
+    </div>
+
+    <button class="join" onclick="join('Royal Battle')">
+      JOIN TOURNAMENT
+    </button>
+
+  </article>
+
+
+  <article class="tournament">
+
+    <div class="tournament-top">
+
+      <div>
+
+        <span class="live upcoming">UPCOMING</span>
+
+        <h3>Badsah Cup</h3>
+
+        <p>8 Players • Knockout</p>
+
+      </div>
+
+      <div class="prize">
+        ₹1,000
+        <small>Prize Pool</small>
+      </div>
+
+    </div>
+
+    <button class="join" onclick="join('Badsah Cup')">
+      JOIN TOURNAMENT
+    </button>
+
+  </article>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+<div class="section-title">
+
+  <h2>Leaderboard</h2>
+
+  <button class="view" onclick="openModal('leaderboard')">
+    View all
+  </button>
+
+</div>
+
+
+<section class="leaderboard">
+
+  <div class="player">
+    <span class="rank">🥇</span>
+    <b>KingRavi</b>
+    <strong>2,840</strong>
+  </div>
+
+  <div class="player">
+    <span class="rank">🥈</span>
+    <b>LudoStar</b>
+    <strong>2,620</strong>
+  </div>
+
+  <div class="player">
+    <span class="rank">🥉</span>
+    <b>Badsah99</b>
+    <strong>2,410</strong>
+  </div>
+
+</section>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom">
+
+  <button class="nav-btn active" onclick="home()">
+    🏠
+    <small>Home</small>
+  </button>
+
+  <button class="nav-btn" onclick="openModal('tournaments')">
+    🏆
+    <small>Games</small>
+  </button>
+
+  <button class="center-play" onclick="playNow()">
+    🎲
+  </button>
+
+  <button class="nav-btn" onclick="openModal('history')">
+    📜
+    <small>History</small>
+  </button>
+
+  <button class="nav-btn" onclick="openModal('profile')">
+    👤
+    <small>Profile</small>
+  </button>
+
+</nav>
+
+
+<!-- MODAL -->
+<div class="modal hide" id="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+const modal = document.getElementById("modal");
+const content = document.getElementById("modalContent");
+const toast = document.getElementById("toast");
+
+function showToast(message){
+
+  toast.innerText = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(function(){
+
+    toast.classList.remove("show");
+
+  },1800);
+
+}
+
+
+function notify(){
+
+  showToast("No new notifications");
+}
+
+
+function playNow(){
+
+  showToast("Game lobby opened");
+}
+
+
+function join(name){
+
+  showToast(name + " selected");
+}
+
+
+function home(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function closeModal(){
+
+  modal.classList.add("hide");
+
+}
+
+
+function openModal(type){
+
+  let title = "";
+  let html = "";
+
+  if(type === "wallet"){
+
+    title = "💰 My Wallet";
+
+    html = `
+      <p>Virtual Balance: <b>₹ 1,250</b></p>
+      <p>Winning Balance: ₹ 0</p>
+      <p>Bonus Balance: ₹ 0</p>
+      <br>
+      <button class="play-btn" onclick="showToast('Demo wallet')">
+        WALLET DETAILS
+      </button>
+    `;
+
+  }
+
+
+  if(type === "profile"){
+
+    title = "👤 My Profile";
+
+    html = `
+      <p>Username: <b>LudoBadsah01</b></p>
+      <p>Level: Badsah</p>
+      <p>Total Matches: 128</p>
+      <p>Wins: 74</p>
+    `;
+
+  }
+
+
+  if(type === "tournaments"){
+
+    title = "🏆 Tournaments";
+
+    html = `
+      <p>🎲 Royal Battle — ₹500 Prize Pool</p>
+      <p>👑 Badsah Cup — ₹1,000 Prize Pool</p>
+      <p>🔥 Mega Ludo — Coming Soon</p>
+    `;
+
+  }
+
+
+  if(type === "history"){
+
+    title = "📜 Match History";
+
+    html = `
+      <p>Royal Battle — Won</p>
+      <p>Badsah Cup — Lost</p>
+      <p>Classic Room — Won</p>
+      <p>Royal Room — Won</p>
+    `;
+
+  }
+
+
+  if(type === "refer"){
+
+    title = "🎁 Refer & Earn";
+
+    html = `
+      <p>Your Referral Code: <b>BADSAH01</b></p>
+
+      <br>
+
+      <button class="play-btn"
+      onclick="copyCode()">
+      COPY CODE
+      </button>
+    `;
+
+  }
+
+
+  if(type === "leaderboard"){
+
+    title = "🏆 Leaderboard";
+
+    html = `
+      <p>🥇 KingRavi — 2,840</p>
+      <p>🥈 LudoStar — 2,620</p>
+      <p>🥉 Badsah99 — 2,410</p>
+      <p>4️⃣ LudoKing — 2,200</p>
+      <p>5️⃣ Badsah01 — 2,050</p>
+    `;
+
+  }
+
+
+  content.innerHTML = `
+    <h2>${title}</h2>
+    ${html}
+  `;
+
+  modal.classList.remove("hide");
+
+}
+
+
+function copyCode(){
+
+  if(navigator.clipboard){
+
+    navigator.clipboard.writeText("BADSAH01");
+
+  }
+
+  showToast("Referral code copied");
+
+}
+
+
+modal.addEventListener("click",function(event){
+
+  if(event.target === modal){
+
+    closeModal();
+
+  }
+
+});
+
+</script>
+
+</body>
+  </html>
