@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LudoDhaba</title>
+    <title>LudoDhaba - Real Cash Ludo</title>
     
     <style>
         * {
@@ -140,39 +140,40 @@
             font-weight: bold;
         }
         .login-screen {
-            padding: 30px 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             height: 100%;
+            text-align: center;
         }
         .login-logo {
-            text-align: center;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             color: #f59e0b;
+            margin-bottom: 10px;
+        }
+        .login-desc {
+            color: #94a3b8;
+            font-size: 14px;
             margin-bottom: 30px;
         }
-        .input-box {
+        .btn-google {
             width: 100%;
-            padding: 12px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            color: white;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-        .btn-main {
-            width: 100%;
-            padding: 12px;
-            background: #f59e0b;
+            padding: 14px;
+            background: #ffffff;
             color: #0f172a;
             border: none;
             border-radius: 8px;
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -182,18 +183,11 @@
         <!-- LOGIN VIEW -->
         <div id="login-view" class="login-screen">
             <div class="login-logo">🎲 LudoDhaba</div>
-            <label style="color: #94a3b8; margin-bottom: 5px; font-size: 14px;">Mobile Number (+91 ke sath likhein)</label>
-            <input type="tel" id="mobile-input" class="input-box" value="+91">
-            <button class="btn-main" onclick="sendOTP()">Send OTP</button>
-            
-            <!-- Hidden Recaptcha Container -->
-            <div id="recaptcha-container"></div>
-
-            <div id="otp-container" style="display: none; margin-top: 20px;">
-                <label style="color: #94a3b8; margin-bottom: 5px; font-size: 14px;">OTP Dalein</label>
-                <input type="text" id="otp-input" class="input-box" placeholder="6-digit OTP" maxlength="6">
-                <button class="btn-main" onclick="verifyOTP()">Verify & Login</button>
-            </div>
+            <div class="login-desc">Apne Google Account se surakshit login karein aur Ludo battles kheleing!</div>
+            <button class="btn-google" onclick="loginWithGoogle()">
+                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.14C3.15 21.32 7.23 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.62H1.18C.43 8.14 0 9.87 0 11.75s.43 3.61 1.18 5.13l4.09-2.64z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.15 2.68 1.18 6.62l4.09 3.14c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+                Sign in with Google
+            </button>
         </div>
 
         <!-- DASHBOARD VIEW -->
@@ -210,7 +204,7 @@
 
                 <button class="btn-create" onclick="createChallenge()">+ Create Challenge</button>
 
-                <div class="section-title">Active Battles</div>
+                <div class="section-title">Active Battles & Room Codes</div>
                 
                 <div id="challenges-list">
                     <div class="battle-card">
@@ -223,25 +217,25 @@
                                 <div class="entry">Entry: ₹100</div>
                                 <div class="prize">Prize: ₹190</div>
                             </div>
-                            <button class="btn-play" onclick="joinBattle(100)">Play</button>
+                            <button class="btn-play" onclick="joinBattle(100, 'ROOM9876')">Play</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="bottom-nav">
-                <div class="nav-link active">🏠<br>Home</div>
+                <div class="nav-link active" onclick="switchTab('home')">🏠<br>Home</div>
                 <div class="nav-link" onclick="openWallet()">💳<br>Wallet</div>
-                <div class="nav-link" onclick="alert('History Section')">📜<br>History</div>
-                <div class="nav-link" onclick="alert('Profile Section')">👤<br>Profile</div>
+                <div class="nav-link" onclick="showHistory()">📜<br>History</div>
+                <div class="nav-link" onclick="showProfile()">👤<br>Profile</div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK Modular Version -->
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
@@ -254,38 +248,27 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-        let confirmationResultObj;
+        let currentUser = null;
 
-        window.sendOTP = function() {
-            let phoneNumber = document.getElementById('mobile-input').value;
-
-            if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                    'size': 'invisible'
-                });
-            }
-
-            signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-                .then(function (confirmationResult) {
-                    confirmationResultObj = confirmationResult;
-                    document.getElementById('otp-container').style.display = 'block';
-                    alert('OTP SMS successfully bhej diya gaya hai!');
-                }).catch(function (error) {
+        window.loginWithGoogle = function() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    currentUser = result.user;
+                    document.getElementById('login-view').style.display = 'none';
+                    document.getElementById('dashboard-view').style.display = 'flex';
+                    alert('Swagat hai, ' + currentUser.displayName + '!');
+                }).catch((error) => {
                     console.error(error);
-                    alert('OTP send karne mein error aayi: ' + error.message);
+                    alert('Login mein error aayi: ' + error.message);
                 });
         }
 
-        window.verifyOTP = function() {
-            let code = document.getElementById('otp-input').value;
-            confirmationResultObj.confirm(code).then(function (result) {
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('dashboard-view').style.display = 'flex';
-                alert('Login Successful!');
-            }).catch(function (error) {
-                alert('Galat OTP! Kripya dobara koshish karein.');
-            });
+        window.showProfile = function() {
+            if(currentUser) {
+                alert('👤 User Profile\nNaam: ' + currentUser.displayName + '\nEmail: ' + currentUser.email);
+            }
         }
     </script>
 
@@ -294,7 +277,7 @@
 
         function openWallet() {
             let amt = prompt("Kitna amount add karna hai?", "100");
-            if(amt && !isNaN(amt)) {
+            if(amt && !isNaN(amt) && Number(amt) > 0) {
                 walletBalance += Number(amt);
                 document.getElementById('balance-text').innerText = '₹' + walletBalance;
                 alert('Successfully ₹' + amt + ' add ho gaye!');
@@ -309,39 +292,48 @@
                     walletBalance -= fee;
                     document.getElementById('balance-text').innerText = '₹' + walletBalance;
                     
+                    let roomCode = 'LUDO' + Math.floor(1000 + Math.random() * 9000);
                     let prizeCalc = fee * 1.9;
                     let list = document.getElementById('challenges-list');
+                    
                     list.innerHTML += `
                         <div class="battle-card">
                             <div class="battle-top">
                                 <span>Creator: You</span>
-                                <span>Classic Mode</span>
+                                <span>Room Code: <b>${roomCode}</b></span>
                             </div>
                             <div class="battle-middle">
                                 <div>
                                     <div class="entry">Entry: ₹${fee}</div>
                                     <div class="prize">Prize: ₹${prizeCalc}</div>
                                 </div>
-                                <span style="color: #f59e0b; font-size: 13px; font-weight: bold;">Waiting...</span>
+                                <span style="color: #22c55e; font-size: 13px; font-weight: bold;">Active</span>
                             </div>
                         </div>
                     `;
-                    alert('Challenge safalpurvak create ho gaya!');
+                    alert('Challenge ban gaya! Aapka Room Code hai: ' + roomCode);
                 } else {
                     alert('Wallet mein paryapt balance nahi hai!');
                 }
             }
         }
 
-        function joinBattle(amount) {
+        function joinBattle(amount, roomCode) {
             if(walletBalance >= amount) {
-                walletBalance -= amount;
-                document.getElementById('balance-text').innerText = '₹' + walletBalance;
-                alert('Battle join ho gayi! Room code jald hi milega.');
+                if(confirm('Aap ₹' + amount + ' ki battle join karna chahte hain?')) {
+                    walletBalance -= amount;
+                    document.getElementById('balance-text').innerText = '₹' + walletBalance;
+                    alert('Battle join ho gayi! Ludo game ka Room Code hai: ' + roomCode);
+                }
             } else {
                 alert('Pehle wallet mein paise add karein!');
             }
         }
+
+        function showHistory() {
+            alert('📜 Transaction History\n- Shuruwati Balance: ₹500\n- Sabhi match aur wallet ki history yahan save rahegi.');
+        }
     </script>
 </body>
 </html>
+
