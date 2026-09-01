@@ -35,8 +35,9 @@
                     <i class="fa-brands fa-google text-red-500 text-base"></i>
                     <span>Sign in with Google</span>
                 </button>
-                <div id="userProfileDisplay" class="hidden text-xs text-green-400 font-semibold">
-                    <span id="welcomeUserText"></span> Logged In Successfully!
+                <div id="userProfileDisplay" class="hidden text-xs text-green-400 font-semibold space-y-1">
+                    <p id="welcomeUserText"></p>
+                    <button id="googleLogoutBtn" class="text-[10px] bg-red-600 text-white px-2 py-1 rounded">Logout</button>
                 </div>
             </div>
         </div>
@@ -70,15 +71,15 @@
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="font-bold text-sm text-yellow-400"><i class="fa-solid fa-wallet"></i> My Wallet</h3>
                     <div class="space-x-1">
-                        <button onclick="toggleTab('deposit')" id="depBtn" class="bg-green-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Add Money</button>
-                        <button onclick="toggleTab('withdraw')" id="witBtn" class="bg-red-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Withdraw</button>
+                        <button onclick="toggleTab('deposit')" class="bg-green-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Add Money</button>
+                        <button onclick="toggleTab('withdraw')" class="bg-red-600 text-white px-2.5 py-1 rounded text-[11px] font-bold shadow">Withdraw</button>
                     </div>
                 </div>
 
                 <!-- Deposit Box -->
                 <div id="depositTab" class="space-y-3 bg-[#1f124a] p-3 rounded-lg border border-purple-500/20">
                     <h4 class="font-bold text-xs text-white">Add Money via QR / UPI</h4>
-                    <p class="text-[11px] text-gray-300">Scan QR or pay to UPI: <span class="text-yellow-400 font-bold">yourname@upi</span></p>
+                    <p class="text-[11px] text-gray-300">Scan QR or pay to UPI: <span class="text-yellow-400 font-bold">sameem@upi</span></p>
                     <div class="w-28 h-28 mx-auto bg-white p-1 rounded flex items-center justify-center text-black text-xs font-bold shadow">
                         [ QR Code ]
                     </div>
@@ -90,7 +91,7 @@
                         <label class="text-[10px] text-gray-400">12-Digit UTR / Transaction ID</label>
                         <input type="text" id="utrNumber" placeholder="e.g. 3352xxxxxxxx" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                     </div>
-                    <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow">Submit Deposit Request</button>
+                    <button id="submitDepBtn" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow">Submit Deposit Request</button>
                 </div>
 
                 <!-- Withdrawal Box -->
@@ -104,7 +105,7 @@
                         <label class="text-[10px] text-gray-400">Enter UPI ID (PhonePe/GooglePay)</label>
                         <input type="text" id="userUpi" placeholder="username@oksbi" class="w-full bg-[#140b32] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                     </div>
-                    <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow">Request Withdrawal</button>
+                    <button id="submitWitBtn" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow">Request Withdrawal</button>
                 </div>
             </div>
         </div>
@@ -127,57 +128,124 @@
 
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- Firebase & App Logic -->
     <script type="module">
-        // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Yahan apni Firebase ki details daal sakte hain (Agar abhi nahi hai toh placeholder pe bhi error nahi dega)
         const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-            projectId: "YOUR_FIREBASE_PROJECT_ID",
-            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-            appId: "YOUR_FIREBASE_APP_ID"
+            apiKey: "AIzaSyAfdUuf53Xi6bxx7Jrd38CGXYNAWnb0QYs",
+            authDomain: "ludo-badsah.firebaseapp.com",
+            databaseURL: "https://ludo-badsah-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ludo-badsah",
+            storageBucket: "ludo-badsah.firebasestorage.app",
+            messagingSenderId: "1008082585739",
+            appId: "1:1008082585739:web:8368c16ccde324a9956c8e"
         };
 
-        let auth = null;
-        try {
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-        } catch(e) {
-            console.log("Firebase config pending");
-        }
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
 
-        const googleBtn = document.getElementById('googleLoginBtn');
-        if(googleBtn) {
-            googleBtn.addEventListener('click', async () => {
-                if(!auth || firebaseConfig.apiKey.includes("YOUR")) {
-                    alert("Kripya Firebase ki API keys configure karein, ya abhi demo mode use karein!");
-                    return;
-                }
-                try {
-                    const provider = new GoogleAuthProvider();
-                    const result = await signInWithPopup(auth, provider);
-                    document.getElementById('googleLoginBtn').classList.add('hidden');
-                    document.getElementById('userProfileDisplay').classList.remove('hidden');
-                    document.getElementById('welcomeUserText').textContent = "Hi, " + result.user.displayName;
-                } catch (error) {
-                    alert("Login Failed: " + error.message);
-                }
-            });
-        }
+        let currentUser = null;
+
+        // Google Login
+        document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                alert("Login Error: " + error.message);
+            }
+        });
+
+        // Google Logout
+        document.getElementById('googleLogoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                document.getElementById('googleLoginBtn').classList.add('hidden');
+                document.getElementById('userProfileDisplay').classList.remove('hidden');
+                document.getElementById('welcomeUserText').textContent = "Hi, " + user.displayName;
+            } else {
+                document.getElementById('googleLoginBtn').classList.remove('hidden');
+                document.getElementById('userProfileDisplay').classList.add('hidden');
+            }
+        });
+
+        // Submit Deposit
+        document.getElementById('submitDepBtn').addEventListener('click', async () => {
+            const amount = document.getElementById('depositAmount').value;
+            const utr = document.getElementById('utrNumber').value;
+
+            if (!amount || !utr) {
+                alert('Kripya Amount aur UTR Number dono bharein!');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "deposits"), {
+                    uid: currentUser ? currentUser.uid : "guest",
+                    name: currentUser ? currentUser.displayName : "Guest",
+                    amount: Number(amount),
+                    utr: utr,
+                    status: "Pending",
+                    timestamp: new Date()
+                });
+                alert('Deposit request bhej di gayi hai! Admin verification ke baad wallet update hoga.');
+                document.getElementById('depositAmount').value = '';
+                document.getElementById('utrNumber').value = '';
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        });
+
+        // Submit Withdrawal
+        document.getElementById('submitWitBtn').addEventListener('click', async () => {
+            const amount = document.getElementById('withdrawAmount').value;
+            const upi = document.getElementById('userUpi').value;
+
+            if (!amount || !upi) {
+                alert('Kripya Amount aur UPI ID dono bharein!');
+                return;
+            }
+            if (Number(amount) < 100) {
+                alert('Minimum withdrawal amount ₹100 hai!');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "withdrawals"), {
+                    uid: currentUser ? currentUser.uid : "guest",
+                    name: currentUser ? currentUser.displayName : "Guest",
+                    amount: Number(amount),
+                    upiId: upi,
+                    status: "Pending",
+                    timestamp: new Date()
+                });
+                alert('Withdrawal request jama ho gayi hai! Jaldi payment bhej di jayegi.');
+                document.getElementById('withdrawAmount').value = '';
+                document.getElementById('userUpi').value = '';
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        });
     </script>
 
+    <!-- UI Script -->
     <script>
-        // Tab switching functions
         function toggleTab(tab) {
             const depositTab = document.getElementById('depositTab');
             const withdrawTab = document.getElementById('withdrawTab');
-            if(!depositTab || !withdrawTab) return;
-            
             if(tab === 'deposit') {
                 depositTab.classList.remove('hidden');
                 withdrawTab.classList.add('hidden');
@@ -186,36 +254,7 @@
                 withdrawTab.classList.remove('hidden');
             }
         }
-
-        // Deposit Action
-        function submitDeposit() {
-            const amount = document.getElementById('depositAmount').value;
-            const utr = document.getElementById('utrNumber').value;
-            if(!amount || !utr) {
-                alert('Kripya Amount aur 12-digit UTR Number dono bharein!');
-                return;
-            }
-            alert('Deposit request bhej di gayi hai! Admin verification ke baad wallet update ho jayega.');
-            document.getElementById('depositAmount').value = '';
-            document.getElementById('utrNumber').value = '';
-        }
-
-        // Withdrawal Action
-        function submitWithdrawal() {
-            const amount = document.getElementById('withdrawAmount').value;
-            const upi = document.getElementById('userUpi').value;
-            if(!amount || !upi) {
-                alert('Kripya Withdrawal Amount aur UPI ID dono bharein!');
-                return;
-            }
-            if(Number(amount) < 100) {
-                alert('Minimum withdrawal amount ₹100 hai!');
-                return;
-            }
-            alert('Withdrawal request safalpurvak jama ho gayi hai! Jaldi aapke UPI par payment bhej di jayegi.');
-            document.getElementById('withdrawAmount').value = '';
-            document.getElementById('userUpi').value = '';
-        }
     </script>
 </body>
 </html>
+
