@@ -26,8 +26,8 @@
             </div>
         </div>
 
-        <!-- ================= 1. AUTHENTICATION SECTION (First Screen if not logged in) ================= -->
-        <div id="authSection" class="p-6 space-y-6 mt-10">
+        <!-- ================= 1. AUTHENTICATION SECTION ================= -->
+        <div id="authSection" class="p-6 space-y-6 mt-6">
             <div class="text-center space-y-2">
                 <div class="w-16 h-16 bg-gradient-to-tr from-orange-500 to-yellow-400 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-lg shadow-orange-500/30">
                     🎲
@@ -38,8 +38,8 @@
 
             <div class="bg-[#140b32] p-5 rounded-2xl border border-purple-900/60 shadow-xl space-y-4">
                 <div class="flex border-b border-purple-950 pb-2 mb-2">
-                    <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400">Login</button>
-                    <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="w-1/2 text-center font-bold text-xs text-gray-400 pb-1">Register</button>
+                    <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer">Login</button>
+                    <button type="button" id="tabRegisterBtn" onclick="switchAuthTab('register')" class="w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer">Register</button>
                 </div>
 
                 <!-- Login Form -->
@@ -52,7 +52,7 @@
                         <label class="text-[10px] text-gray-400">Password</label>
                         <input type="password" id="loginPassword" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
                     </div>
-                    <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-950 font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2">Login to Account</button>
+                    <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-gray-950 font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2 cursor-pointer">Login to Account</button>
                 </div>
 
                 <!-- Register Form -->
@@ -69,15 +69,15 @@
                         <label class="text-[10px] text-gray-400">Password</label>
                         <input type="password" id="regPassword" placeholder="********" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2.5 text-xs text-white mt-1 focus:outline-none focus:border-yellow-400">
                     </div>
-                    <button onclick="handleRegister()" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2">Create Account</button>
+                    <button onclick="handleRegister()" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold py-2.5 rounded-lg text-xs shadow-lg mt-2 cursor-pointer">Create Account</button>
                 </div>
             </div>
         </div>
 
-        <!-- ================= 2. MAIN APP DASHBOARD (Hidden until logged in) ================= -->
+        <!-- ================= 2. MAIN APP DASHBOARD ================= -->
         <div id="mainDashboard" class="hidden">
 
-            <!-- TAB 1: PLAY / HOME SECTION -->
+            <!-- TAB 1: PLAY SECTION -->
             <div id="playSection" class="space-y-4 pb-4 p-4">
                 <div class="bg-gradient-to-r from-purple-900/60 to-indigo-900/60 p-4 rounded-2xl border border-purple-500/30 flex justify-between items-center shadow-lg">
                     <div>
@@ -89,26 +89,23 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="space-y-2.5">
-                    <button onclick="openCreateBattleModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2">
+                    <button onclick="openCreateBattleModal()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
                         <i class="fa-solid fa-plus-circle text-sm"></i>
                         <span>Create Ludo Challenge</span>
                     </button>
                 </div>
 
-                <!-- Active Battles -->
                 <div class="space-y-3 pt-2">
                     <h3 class="font-bold text-sm text-gray-200">Active Battles</h3>
                     <div id="battlesList" class="space-y-3">
-                        <!-- Dynamic Battles -->
                         <div class="bg-[#140b32] p-3.5 rounded-xl border border-purple-900/50 flex justify-between items-center shadow-md">
                             <div>
                                 <p class="text-xs text-gray-400">Creator: <span class="text-white font-semibold">Sameem Khan</span></p>
                                 <p class="text-xs text-gray-300 mt-0.5">Room Code: <span class="text-yellow-400 font-bold">LUDO9988</span></p>
                                 <p class="text-xs font-bold text-green-400 mt-1">Entry: ₹100 | Win: ₹190</p>
                             </div>
-                            <button onclick="alert('Battle Joined Successfully!')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow">Join</button>
+                            <button onclick="alert('Battle Joined Successfully!')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg text-xs font-bold text-white shadow cursor-pointer">Join</button>
                         </div>
                     </div>
                 </div>
@@ -123,8 +120,8 @@
                             <h2 class="text-xl font-bold text-green-400" id="walletDisplayBalance">₹0</h2>
                         </div>
                         <div class="space-x-1">
-                            <button onclick="toggleWalletTab('deposit')" id="depTabBtn" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold shadow">Add Money</button>
-                            <button onclick="toggleWalletTab('withdraw')" id="witTabBtn" class="bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-[11px] font-bold shadow">Withdraw</button>
+                            <button onclick="toggleWalletTab('deposit')" id="depTabBtn" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold shadow cursor-pointer">Add Money</button>
+                            <button onclick="toggleWalletTab('withdraw')" id="witTabBtn" class="bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-[11px] font-bold shadow cursor-pointer">Withdraw</button>
                         </div>
                     </div>
 
@@ -143,7 +140,7 @@
                             <label class="text-[10px] text-gray-400">12-Digit UTR / Transaction ID</label>
                             <input type="text" id="utrNumber" placeholder="e.g. 3352xxxxxxxx" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                         </div>
-                        <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow">Submit Deposit Request</button>
+                        <button onclick="submitDeposit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Submit Deposit Request</button>
                     </div>
 
                     <!-- Withdrawal Tab -->
@@ -157,7 +154,7 @@
                             <label class="text-[10px] text-gray-400">UPI ID (GooglePay / PhonePe / Paytm)</label>
                             <input type="text" id="userUpi" placeholder="username@oksbi" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5 focus:outline-none">
                         </div>
-                        <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow">Request Withdrawal</button>
+                        <button onclick="submitWithdrawal()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Request Withdrawal</button>
                     </div>
                 </div>
             </div>
@@ -175,21 +172,21 @@
                         <p class="text-gray-300">Total Games Played: <span class="float-right text-yellow-400 font-bold">0</span></p>
                         <p class="text-gray-300">Total Winnings: <span class="float-right text-green-400 font-bold">₹0</span></p>
                     </div>
-                    <button onclick="handleLogout()" class="w-full bg-red-600/80 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs shadow">Logout Account</button>
+                    <button onclick="handleLogout()" class="w-full bg-red-600/80 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs shadow cursor-pointer">Logout Account</button>
                 </div>
             </div>
 
             <!-- BOTTOM NAVIGATION BAR -->
             <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#120826] border-t border-purple-900/60 flex justify-around py-2.5 px-2 z-50 text-xs shadow-lg">
-                <button onclick="switchTab('play')" id="navPlay" class="flex flex-col items-center text-purple-400 focus:outline-none">
+                <button onclick="switchTab('play')" id="navPlay" class="flex flex-col items-center text-purple-400 focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-gamepad text-base"></i>
                     <span class="text-[10px]">Play</span>
                 </button>
-                <button onclick="switchTab('wallet')" id="navWallet" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none">
+                <button onclick="switchTab('wallet')" id="navWallet" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-wallet text-base"></i>
                     <span class="text-[10px]">Wallet</span>
                 </button>
-                <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none">
+                <button onclick="switchTab('profile')" id="navProfile" class="flex flex-col items-center text-gray-400 hover:text-white focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-user text-base"></i>
                     <span class="text-[10px]">Profile</span>
                 </button>
@@ -209,8 +206,8 @@
                     <input type="text" id="battleRoomCode" placeholder="e.g. 12345678" class="w-full bg-[#0b061e] border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white mt-0.5">
                 </div>
                 <div class="flex space-x-2 pt-2">
-                    <button onclick="publishBattle()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg text-xs">Publish</button>
-                    <button onclick="closeCreateBattleModal()" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 rounded-lg text-xs">Cancel</button>
+                    <button onclick="publishBattle()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Publish</button>
+                    <button onclick="closeCreateBattleModal()" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Cancel</button>
                 </div>
             </div>
         </div>
@@ -219,11 +216,9 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Local Database State simulation (InMemory + LocalStorage)
         let currentUser = JSON.parse(localStorage.getItem('ludo_user')) || null;
         let userBalance = Number(localStorage.getItem('ludo_balance')) || 0;
 
-        // Check initial auth state on load
         window.onload = function() {
             if(currentUser) {
                 showDashboard();
@@ -232,6 +227,7 @@
             }
         }
 
+        // Fixed Switch Auth Tab Functionality
         function switchAuthTab(type) {
             const loginForm = document.getElementById('loginForm');
             const registerForm = document.getElementById('registerForm');
@@ -241,13 +237,13 @@
             if(type === 'login') {
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
-                tabLoginBtn.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400";
-                tabRegisterBtn.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1";
+                tabLoginBtn.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer";
+                tabRegisterBtn.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer";
             } else {
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
-                tabRegisterBtn.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400";
-                tabLoginBtn.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1";
+                tabRegisterBtn.className = "w-1/2 text-center font-bold text-xs text-yellow-400 pb-1 border-b-2 border-yellow-400 cursor-pointer";
+                tabLoginBtn.className = "w-1/2 text-center font-bold text-xs text-gray-400 pb-1 cursor-pointer";
             }
         }
 
@@ -279,7 +275,6 @@
                 return;
             }
 
-            // Quick login pass
             currentUser = { name: email.split('@')[0], email: email };
             localStorage.setItem('ludo_user', JSON.stringify(currentUser));
             
@@ -297,7 +292,6 @@
             document.getElementById('mainDashboard').classList.remove('hidden');
             document.getElementById('headerWalletBox').classList.remove('hidden');
 
-            // Set profile & header data
             document.getElementById('dashWelcomeName').textContent = "Hi, " + currentUser.name;
             document.getElementById('profileName').textContent = currentUser.name;
             document.getElementById('profileEmail').textContent = currentUser.email;
@@ -317,6 +311,5 @@
             document.getElementById('walletDisplayBalance').textContent = "₹" + userBalance;
         }
 
-        // Navigation Tabs Switcher
         function switchTab(tab) {
-   
+            const playSec = document.getElem
